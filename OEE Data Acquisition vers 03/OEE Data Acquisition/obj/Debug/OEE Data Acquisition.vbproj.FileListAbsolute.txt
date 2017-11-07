@@ -1,0 +1,20 @@
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\OEE Data Acquisition.exe.config
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\OEE Data Acquisition.exe
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\OEE Data Acquisition.pdb
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\OEE Data Acquisition.xml
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.DA_Junction.dll
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.KEPServerExControls.dll
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.OpcClient.dll
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\MySql.Data.dll
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.BrowseControls.dll
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.DA_Junction.xml
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.OpcClient.xml
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\MySql.Data.xml
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\bin\Debug\Kepware.ClientAce.BrowseControls.xml
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE_Data_Acquisition.Form1.resources
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE_Data_Acquisition.Resources.resources
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE Data Acquisition.vbproj.GenerateResource.Cache
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE Data Acquisition.exe
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE Data Acquisition.xml
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE Data Acquisition.pdb
+C:\Philips Windows Program\OEE data\OEE Data Acquisition vers 03\OEE Data Acquisition\obj\Debug\OEE Data Acquisition.vbprojResolveAssemblyReference.cache

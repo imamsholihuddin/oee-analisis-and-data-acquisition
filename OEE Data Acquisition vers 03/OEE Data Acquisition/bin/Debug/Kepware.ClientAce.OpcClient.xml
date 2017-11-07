@@ -1,0 +1,3633 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        "net_opc_client"
+    </assembly>
+    <members>
+        <member name="F:Kepware.ClientAce.OpcDaClient.DaServerMgt.m_ServerStateChanged">
+Callback handling
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.HandleNullReference(System.String)">
+Exception helpers
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Dispose">
+Construction
+
+<summary>
+Disconnects from the server id currently connected.
+Releases all managed resources.
+</summary></member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.DaServerMgt.ServerState">
+The current server state
+
+<summary>
+Indicates the status of the connection between the API and the underlying OPC server.
+</summary></member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.DaServerMgt.IsConnected">
+whether the server is currently connected
+
+<summary>
+Indicates the actual connect status to the client API.
+</summary></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.GetProperties(Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@,System.Int32[]@,System.Boolean,System.Boolean,Kepware.ClientAce.OpcDaClient.ItemProperties[]@)">
+Get item properties
+
+<summary>
+Returns the requested properties for a list of items. 
+</summary><param name="itemIdentifiers">The item identifiers, whose properties should be obtained.</param><param name="propertyIDs">The IDs of the requested properties.</param><param name="returnAllProperties">Indicates to return all properties.</param><param name="returnPropertyValues">Indicates to rreturn the values of the requested properties.</param><param name="itemProperties">The requested itemProperties.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Browse(System.String,System.String,System.String@,System.Int32,Kepware.ClientAce.OpcDaClient.BrowseFilter,System.Int32[],System.Boolean,System.Boolean,Kepware.ClientAce.OpcDaClient.BrowseElement[]@,System.Boolean@)">
+Browse OPC server adress space
+
+<summary>
+Browse OPC server adress space.
+Using the Browse method the address space of an OPC Servers can be searched for tags, folders or both. 
+</summary><param name="itemName">Specifies the element (branch) for which all child elements will be obtained. By passing an empty string the root level of the server will be browsed.</param><param name="itemPath">Is used to specify an ItemPath for the element to an OPC XML-DA Server. Ignored for COM servers</param><param name="continuationPoint">The string used to continue a browse that could not be completed.</param><param name="maxElementsReturned">The maximum elements which should be returned. If set to 0 all elements will be returned</param><param name="browseFilter">Filter on the type of elementsto be returned, e.g. all, branch, items.</param><param name="propertyIDs">The IDs of requested item properties (enum PropertyID will help to build the list).</param><param name="returnAllProperties">All properties will be returned in the associated BrowseElement.</param><param name="returnPropertyValues">The property values of the requested properties will be returned.</param><param name="browseElements">Contains all requested browse elements, that are all childs of itemName and match the browseFilter</param><param name="moreElements">Idicates that the server has more elements, Browse must be called again using the returned continuationPoint. Note: always true if the server does not support the continuationPoint mechanism.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionCancel(System.Int32)">
+Cancel Subscription. 
+
+<summary>
+Cancel Subscription.
+</summary><param name="serverSubscription">The server's index of the subscription as returned during Subscribe.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionRemoveItems(System.Int32,Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@)">
+Remove Items from existing Subscription. 
+
+<summary>
+Remove Items from an existing Subscription.
+</summary><param name="serverSubscription">The server's index of the subscription as returned during Subscribe.</param><param name="itemIdentifiers">List of items to remove from the subscription.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionAddItems(System.Int32,Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@)">
+Add Items to existing Subscription. 
+
+<summary>
+Adds items to an existing Subscription.
+</summary><param name="serverSubscription">The server's index of the subscription as returned during Subscribe.</param><param name="itemIdentifiers">The list of items to add to the subscription.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionModify(System.Int32,System.Single)">
+/* Modify deadband of subscription. 
+
+<summary>
+Modifies the deadband of subscription.
+</summary><param name="serverSubscription">The server's index of the subscription as returned during Subscribe</param><param name="deadband">The percent change in an item value that will cause a notification for that value (must be between 0 and 100).</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionModify(System.Int32,System.Int32,System.Int32@)">
+/* Modify update rate of subscription. 
+
+<summary>
+Modifies the update rate of a subscription.
+</summary><param name="serverSubscription">The server's index of the subscription as returned during Subscribe</param><param name="updateRate">Requested update rate for notifications (in ms).</param><param name="revisedUpdateRate">The revised update rate from the server.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionModify(System.Int32,System.Boolean)">
+/* Modify active state of subscription. 
+
+<summary>
+Modifies the active state of a subscription.
+</summary><param name="serverSubscription">Unique identifier of the subscription, received from Subscribe.</param><param name="active">Sets the subscription active (true) or inactive (false).</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.SubscriptionModify(System.Int32,System.Boolean,System.Int32,System.Int32@,System.Single)">
+Modify active state of subscription. 
+
+<summary>
+Modifies an existing subscription.
+</summary><param name="serverSubscription">Unique identifier of the subscription, returned during Subscribe method.</param><param name="active">Set the subscription active. Pass 'null' to remain unchanged.</param><param name="updateRate">Requested update rate in ms.</param><param name="revisedUpdateRate">The revised update rate from the server.</param><param name="deadband">The percent change in an item value that will cause a notification for that value (must be between 0 and 100).</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Subscribe(System.Int32,System.Boolean,System.Int32,System.Int32@,System.Single,Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@,System.Int32@)">
+Subscribe items to receive data changes from the OPC server. 
+
+<summary>
+Subscribe items to receive data changes from the OPC server.
+</summary><param name="clientSubscription">Identification number to identify the DataChanged notification related to this subscription.</param><param name="active">Creates an active subscription.</param><param name="updateRate">The requested rate (in ms) at which notifications will be sent.</param><param name="revisedUpdateRate">The revised update rate from the server.</param><param name="deadband">The percent change in an item value that will cause a notification for that value (must be between 0 and 100).</param><param name="itemIdentifiers">The items to add to the subscription.</param><param name="serverSubscription">This index is used to modify or cancel the subscription.</param></member>
+        <member name="E:Kepware.ClientAce.OpcDaClient.DaServerMgt.WriteCompleted">
+            <summary>
+Event is fired when there is a write completed callback.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.DaServerMgt.WriteCompletedEventHandler">
+            <summary>
+The write complete delegate.
+</summary>
+            <param name="transactionHandle"> Identification number to identify the WriteAsync call that caused the event.</param>
+            <param name="noErrors"> Indicates if there are errors in the ItemResultCallback array. If the value of noError is ‘false’, the ResultID property within the ItemResultCallback must be checked.</param>
+            <param name="itemResults"> Contains ResultID and ClientHandle for all items of the related WriteAsync call.</param>
+        </member>
+        <member name="E:Kepware.ClientAce.OpcDaClient.DaServerMgt.ReadCompleted">
+            <summary>
+Event fired when there is a read completed callback.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.DaServerMgt.ReadCompletedEventHandler">
+            <summary>
+The read completed delegate.
+</summary>
+            <param name="transactionHandle"> Identification number to identify the ReadAsync call that caused the event.</param>
+            <param name="allQualitiesGood"> Indicates if there are values with bad quality in the ItemValueCallback array.</param>
+            <param name="noErrors"> Indicates if there are errors in the ItemValueCallback array. If the value of noError is ‘false’, the ResultID property within the ItemValueCallback must be checked.</param>
+            <param name="itemValues"> Contains Value, Quality and Timestamp for every read item.</param>
+        </member>
+        <member name="E:Kepware.ClientAce.OpcDaClient.DaServerMgt.ServerStateChanged">
+            <summary>
+Event is fired when the server's state has changed.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.DaServerMgt.ServerStateChangedEventHandler">
+            <summary>
+The server state changed delegate.
+</summary>
+            <param name="clientHandle"> Identification number to identify the related server connection.</param>
+            <param name="state"> The new state of the server.</param>
+        </member>
+        <member name="E:Kepware.ClientAce.OpcDaClient.DaServerMgt.DataChanged">
+            <summary>
+Event is fired when there is a data change callback.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.DaServerMgt.DataChangedEventHandler">
+            <summary>
+The data changed delegate.
+</summary>
+            <param name="clientSubscription"> Identification number to identify the subscription that fired the event.</param>
+            <param name="allQualitiesGood"> Indicates if there are values with bad quality in the ItemValueCallback array.</param>
+            <param name="noErrors"> Indicates if there are errors in the ItemValueCallback array. If the value of noError is ‘false’, the ResultID property within the ItemValueCallback must be checked.</param>
+            <param name="itemValues"> Contains Value, Quality and Timestamp for every changed item.</param>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.WriteAsync(System.Int32,Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@,Kepware.ClientAce.OpcDaClient.ItemValue[])">
+Writes item values asynchronous to OPC server
+
+<summary>
+Writes item values asynchronously to OPC server. The success will be returned in the WriteCompleted event.
+</summary><param name="transactionHandle">Identification number that will be returned in the WriteCompleted event to identify the corresponding WriteAsync call.</param><param name="itemIdentifiers">The identifiers of the items to write.</param><param name="itemValues">The values that should be written to the items.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.ReadAsync(System.Int32,System.Int32,Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@)">
+Writes item values asynchronous to OPC server
+
+<summary>
+Reads item values asynchronously from the OPC server. The values will be returned in the ReadCompleted event.
+</summary><param name="transactionHandle">Identification number that will be returned in the ReadCompleted event to identify the corresponding ReadAsync call.</param><param name="maxAge">The maximum age of the value in ms.</param><param name="itemIdentifiers">The identifiers of the items to read.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Write(Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@,Kepware.ClientAce.OpcDaClient.ItemValue[])">
+Writes item values synchronous to OPC server
+
+<summary>
+Writes item values synchronously to OPC server.
+</summary><param name="itemIdentifiers">The identifiers of the items to write.</param><param name="itemValues">The values to write to the items.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Read(System.Int32,Kepware.ClientAce.OpcDaClient.ItemIdentifier[]@,Kepware.ClientAce.OpcDaClient.ItemValue[]@)">
+Reads item values synchronous from OPC server. 
+
+<summary>
+Reads item values synchronous from OPC server.
+</summary><param name="maxAge">The maximum age of the value in ms</param><param name="itemIdentifiers">The identifiers of the items to read.</param><param name="itemValues">The values of the items.</param><returns /></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Disconnect">
+Disconnects from OPC server
+
+<summary>
+Disconnect from the OPC server. All subscriptions and resources will be freed.
+</summary></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.Connect(System.String,System.Int32,Kepware.ClientAce.OpcDaClient.ConnectInfo@,System.Boolean@)">
+Connects to the Opc server
+
+<summary>
+Establishes the connection to the Server.
+</summary><param name="url">The complete url of the OPC server(opcda://[Hostname/][ProgID]/[ClsID]).</param><param name="clientHandle">Client can pass an index for this specific server object for future identification.</param><param name="connectInfo">Contains connection information.</param><param name="connectFailed">Indicates that the initial connect failed.</param></member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.DaServerMgt.#ctor">
+Construction
+
+<summary>
+A .NET managment class to handle all interactions with an OPC DA Server.
+</summary></member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.DaServerMgt">
+            <summary>
+The class DaServerMgt allows the access to an OPC Data Access Server.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.OpcServerEnum.m_AscCmnClient">
+Wrapped c++ object
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.HandleNullReference(System.String)">
+Exception helpers
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.Dispose">
+Destructor
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.CheckTrace">
+ Tracing
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.getEndpoints(System.String,Kepware.ClientAce.OpcCmn.EndpointIdentifier[]@)">
+Get a list of Endpoints from the OPCUA server
+
+</member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.getCertificateForEndpoint(System.String,System.String,System.Byte,System.Byte[]@)">
+Get the server certificate from the server
+
+<summary>
+Get the ServerCertificate from the specified server.
+</summary><param name="server">The definition of the server we want to get the certificate from</param></member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.ClsidFromProgId(System.String,System.String,System.String@)">
+Get the CLSID for a give node name and ProgID
+
+<summary>
+Returns the CLSID of the given OPC Server.
+</summary><param name="nodeName">The name or the IP address of the host where the CLSID should be obtained. (e.g. localhost, PCTest, 192.168.0.120, etc.)</param><param name="progId">The ProgID for which the associated CLSID should be fetched.</param><param name="clsid">The returned CLSID</param></member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.EnumComServer(System.String,System.Boolean,Kepware.ClientAce.OpcCmn.ServerCategory[],Kepware.ClientAce.OpcCmn.ServerIdentifier[]@)">
+Enumerates the Com OPC servers for the given node name
+
+<summary>
+Obtains a list of COM Servers from a specific Node.
+</summary><param name="nodeName">The name or the IP address of the host where OPC Servers should be located. (e.g. localhost, PCTest, 192.168.0.120, etc.)</param><param name="returnAllServers">This flag decides whether to return all OPC Server found on that particular machine or not. If this parameter is set true, the array serverCategories will be ignored.</param><param name="serverCategories">This parameter specifies which types of OPC Servers should be returned.</param><param name="servers">A list of ServerIdentifier objects. These objects contain the information that is needed for connection establishment with each of the Servers.</param></member>
+        <member name="M:Kepware.ClientAce.OpcCmn.OpcServerEnum.#ctor">
+Construction
+
+<summary>
+Internal constructor prevents construction outside of this assembly.
+</summary></member>
+        <member name="T:Kepware.ClientAce.OpcCmn.OpcServerEnum">
+            <summary>
+Provides all registered OPC Servers on a specific node.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.HandleManager.#ctor">
+Constructor ******************
+</member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.CertificateStoreLocation">
+            <summary>
+The CertificateStoreLocation used for the validation of the certificates. Only applies for UA Servers with security and is ignored for other types of servers.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.UserIdentity">
+            <summary>
+The UserIdentityToken. Defines which kind of authtication is used for the connection.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.ClientName">
+            <summary>
+The Name of the client used to for diagnostic purpose on the server side.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.CertificateStoreName">
+            <summary>
+The CertificateStoreName used for the validation of the certificates. Only applies for UA Servers with security and is ignored for other types of servers.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.ClientPrivateKey">
+            <summary>
+The ClientPrivateKey used for the connection. Only applies for UA Servers when using security.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.ClientCertificate">
+            <summary>
+The ClientCertificate used for the connection. Only applies for UA Servers when using security.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.ServerCertificate">
+            <summary>
+The ServerCertificate used for the connection. Only applies for UA Servers when using security.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.MessageSecurityMode">
+            <summary>
+The MessageSecurityMode used for the connection. Only applies for UA Servers and is ignored for other types of servers.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.SecurityPolicyUri">
+            <summary>
+The SecurityPolicy used for the connection. Only applies for UA Servers and is ignored for other types of servers.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.DoServerCertificateVerify">
+            <summary>
+If this flag is set the API will try to validate the server certificate when connecting with security.
+If the application handles the certificate management this flag can be set to false to disable the check.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.RetryAfterConnectionError">
+            <summary>
+If this flag is set the API will reconnect after connection loss until the connect succeeds. If the connection could be reestablished the group handles – created before interruption – will be valid again. The event handler methods are remaining also subscribed to the events.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.RetryInitialConnection">
+            <summary>
+If this flag is set the API will try to connect to the server even when the first connect did not succeeded.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.UACallTimeout">
+            <summary>
+The timeout used for each UA service call - default is 10000 milliseconds.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.KeepAliveTime">
+            <summary>
+The keep alive time in milliseconds.
+During runtime the OPC client API permanently checks the availability and the connection to the server.
+KeepAliveTime represents the time interval in milliseconds, after which a validation takes place.
+The reconnect interval starts with two times KeepAliveTime and will be incremented up to 10 times KeepAliveTime if the server is not available for a longer time period.
+The default value is 10000 ms.
+The reconnect interval after a shutdown event form the OPC server is one minute.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.LocalId">
+            <summary>
+The locale name in the format "[languagecode]-[country/regioncode]", where languagecode is the two letter ISO 639 code for a language, country/regioncode is the two letter ISO 3166 code for the country/region.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.RWGroupUpdateRate">
+            <summary>
+Set the updaterate for the ReadWrite group.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.DisableCacheReadForActiveRWGroup">
+            <summary>
+When ForceActiveRWGroup and DisableCacheReadForActiveRWGroup is set the read is done from CACHE if MaxAge &gt; the UpdateRate of the ReadWrite group.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.ForceActiveRWGroup">
+            <summary>
+Add the group that is used for read and write active with active items and do a read from CACHE.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.DoAdviseActiveRWGroup">
+            <summary>
+When the group that is used for read and write is added active this property defines if the group is advised.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.BrowseInterfaceSelection">
+            <summary>
+The type of browse interface that should be used for browse. This setting allows to force OPC Data Access 2 browsing even if OPC Data Access 3 browsing is allowed.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ConnectInfo.DefaultNamespaceUri">
+            <summary>
+For items from the default namespace the OPCDA ItemId will be the same as the string UANodeId.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ConnectInfo.#ctor">
+            <summary>
+Initializes an ConnectInfo instance with default values.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ConnectInfo.#ctor(System.String,System.Boolean,System.Boolean,System.Int32)">
+            <summary>
+Initializes an ConnectInfo instance with the given values.
+</summary>
+            <param name="localID">The locale name in the format "[languagecode]-[country/regioncode]".&gt;]</param>
+            <param name="retryInitialConnection">Try to connect even when the initial connection failed.</param>
+            <param name="retryAfterConnectionError">Try to reconnect after connection was lost.</param>
+            <param name="keepAliveTime">The keep alive time in milliseconds.</param>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ConnectInfo">
+            <summary>
+Contains connection information.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.BrowseInterface">
+            <summary>
+The type of browse interface that should be used for browse.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.BrowseInterface.ComDA3">
+            <summary>
+Browse functionality of OPC Data Access 3.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.BrowseInterface.ComDA2">
+            <summary>
+Browse functionality of OPC Data Access 2.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.BrowseInterface.Default">
+            <summary>
+Default browse functionality for the selected OPC protocol.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityTokenIssuedToken.EncryptionAlgorithm">
+            <summary>
+The encryption algorithm used to encrypt the token data. If the string is empty the token data is not encrypted.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityTokenIssuedToken.TokenData">
+            <summary>
+The XML representation of the token encoded to a byte string. This token may be encrypted with the server certificate.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.UserIdentityTokenIssuedToken">
+            <summary>
+UserIdentityToken for authentication based on an WS-Security compliant token e.g. Kerberos token.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityTokenCertificate.PrivateKey">
+            <summary>
+The private key for the X509 certificate in PEM format.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityTokenCertificate.Certificate">
+            <summary>
+The X509 certificate in DER format.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.UserIdentityTokenCertificate">
+            <summary>
+An UserIdentityToken to pass an X509v3 certificate for user authentication.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityTokenUserPassword.Password">
+            <summary>
+The password to use for authentication.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityTokenUserPassword.UserName">
+            <summary>
+The username to use for authentication.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.UserIdentityTokenUserPassword">
+            <summary>
+UserIdentityToken for Username password authentication.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.UserIdentityToken.TokenType">
+            <summary>
+Get the type of user identity token.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.UserIdentityToken">
+            <summary>
+The base class for user identity tokens.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.UserTokenType">
+            <summary>
+The type of IdentityToken to authenticate the user when connecting to the server.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.UserTokenType.IssuedToken">
+            <summary>
+Authenticate with an issued token e.g. a Kerberos token.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.UserTokenType.Certificate">
+            <summary>
+Authenticate with a user certificate.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.UserTokenType.UserName">
+            <summary>
+Authenticate with username and password.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.UserTokenType.Anonymous">
+            <summary>
+No user authentication.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ServerState">
+            <summary>
+The Enumerator ServerState is passed in the StateChange event and includes information on the actual status of the Server.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ServerState.CONNECTED">
+            <summary>
+The connection to the OPC Server is established.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ServerState.ERRORWATCHDOG">
+            <summary>
+The client API has notified a connection error to OPC Server. 
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ServerState.ERRORSHUTDOWN">
+            <summary>
+The OPC Server has fired a shutdown event.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ServerState.DISCONNECTED">
+            <summary>
+There is no connection to the OPC Server.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ServerState.UNDEFINED">
+            <summary>
+The OPC Server returned a status that is unknown to the Client API.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemResultCallback.ResultID">
+            <summary>
+Returns item specific errors. The class ResultID provides the error code (int), the name (string) and a language dependant description (string).
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemResultCallback.ClientHandle">
+            <summary>
+The ClientHandle passed during WriteAsync is returned. The ClientHandle enables the Client to uniquely assign the returned value.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemResultCallback.#ctor">
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ItemResultCallback">
+            <summary>
+The class ItemResultCallback is used in the WriteCompleted callback and contains properties for identifying items and possible errors.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemValueCallback.ResultID">
+            <summary>
+Returns item specific errors. The class ResultID provides the error code (int), the name (string) and a language dependant description (string).
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemValueCallback.ClientHandle">
+            <summary>
+The ClientHandle passed during Subscribe is returned. The ClientHandle enables the Client to uniquely assign the returned value.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemValueCallback.#ctor">
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ItemValueCallback">
+            <summary>
+The class ItemValueCallback is derived from class ItemValue and - in addition to the description of ItemValue - contains properties required for callback operation.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemValue.TimeStamp">
+            <summary>
+The time stamp of the associated Value, which represets the time the Server took the last snapshot of the value.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemValue.Quality">
+            <summary>
+The quality of the associated Value. The class QualityID provides the quality code (int), the name (string) and the description (string).
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemValue.Value">
+            <summary>
+The value that was read respectively that should be written. Having the property Value of type object, it can accommodate any data type or it can contain any data type. Typically the Value will be of the same type as requested by the corresponding ItemIdentifier.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemValue.#ctor">
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ItemValue">
+The argument passed to a ResourceEvent
+<summary>
+The class ItemValue is used for the Read and Write methods. When reading it contains the value, the quality and the timestamp. When writing, only the value can be assigned.
+When calling the Read method the ItemValue array is an out-parameter that means the object will be created completely by .NET OPC API.
+When calling the Write method the ItemValue array together with the dedicated ItemIdentifier array must be created and must be filled with the values to write by the client.
+</summary></member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.IsGood">
+            <summary>
+Indicates if QualityID contains the “good” code for a value or not, without checking the code itself.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.Description">
+            <summary>
+Contains the description of the quality code, language depends on the locale.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.Name">
+            <summary>
+Contains the string-representation of the code.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.VendorBits">
+            <summary>
+Contains the vendor specific part within the code transferred by the server.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.LimitBits">
+            <summary>
+Contains the limit portion only, within the transferred code.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.Quality">
+            <summary>
+Contains the code that describes the quality of the transferred value.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.QualityID.FullCode">
+            <summary>
+Contains the full code transferred by the server.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.QualityID">
+            <summary>
+The class QualityID contains all information regarding the quality code send by the server.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.BrowseElement.ItemProperties">
+            <summary>
+The set of properties for the element.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.BrowseElement.HasChildren">
+            <summary>
+Indicates whether the element has children.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.BrowseElement.IsItem">
+            <summary>
+Indicates whether the element refers to an item with data that can be accessed.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.BrowseElement.ItemPath">
+            <summary>
+An secondary identifier for the element within the server namespace.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.BrowseElement.ItemName">
+            <summary>
+The primary identifier for the element within the server namespace (ItemID).
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.BrowseElement.Name">
+            <summary>
+A descriptive name for element that is unique within a branch. Typically this name is used for displaying the address space in a tree or other structured format.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.BrowseElement.#ctor">
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.BrowseElement">
+            <summary>
+Contains a description of an element in the server address space.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.BrowseFilter">
+            <summary>
+The type of browse elements that should be returned during a browse.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.BrowseFilter.ITEM">
+            <summary>
+Return only elements that represent items.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.BrowseFilter.BRANCH">
+            <summary>
+Return only elements that contain other elements.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.BrowseFilter.ALL">
+            <summary>
+Return all types of browse elements.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperties.RequestedItemProperties">
+            <summary>
+Array of objects of class ItemProperty. This array contains all requested properties of an OPC Item (no matter if they were requested by GetProperties or Browse).
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemProperties.#ctor(System.Int32)">
+Constructor ******************
+<summary>
+Internal constructor prevents construction outside of this assembly.
+</summary></member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ItemProperties">
+            <summary>
+A list of properties for a single item.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.ResultID">
+            <summary>
+If an error was occurred while obtaining the properties, the dedicated error code will be returned within this property.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.PropertyID">
+            <summary>
+The identification number of the property.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.DataType">
+            <summary>
+The value’s data type of the property.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.ItemPath">
+            <summary>
+If the OPC Server supports reading and writing of properties through an item, here the ItemPath of this property will be returned.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.ItemName">
+            <summary>
+If the OPC Server supports reading and writing of properties through an item, here the ItemName of this property will be returned.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.Value">
+            <summary>
+The value of the property.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemProperty.Description">
+            <summary>
+The description of the property. This information can be used when displaying the property in a graphical user interface (e.g. in a Grid Control or a ToolTip).
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemProperty.#ctor">
+Constructor ******************
+<summary>
+Internal constructor prevents construction outside of this assembly.
+</summary></member>
+        <member name="P:Kepware.ClientAce.OpcCmn.ServerIdentifier.Endpoint">
+            <summary>
+The EndpointIdentifier of a UA connection.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.ServerIdentifier.Category">
+            <summary>
+The OPC Category of the Server, e.g. OPC DA, OPC HDA, etc.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.ServerIdentifier.CLSID">
+            <summary>
+The CLSID of the OPC Server.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.ServerIdentifier.Url">
+            <summary>
+The complete URL of the OPC Server. This information is required for Connect method.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.ServerIdentifier.HostName">
+            <summary>
+The name of the host on which OPC Server was found.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.ServerIdentifier.ProgID">
+            <summary>
+The ProgID of the OPC Server.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcCmn.ServerIdentifier.#ctor(System.String,Kepware.ClientAce.OpcCmn.EndpointIdentifier)">
+            <summary>
+Constructor for UA Server.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcCmn.ServerIdentifier.#ctor(System.String,System.String,System.String,Kepware.ClientAce.OpcCmn.ServerCategory)">
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcCmn.ServerIdentifier">
+            <summary>
+Provides all data required to establish a connection to an OPC Server.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcCmn.EndpointIdentifier.ToString">
+            <summary>
+Override the ToString method for human readable output.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.ServerCertificate">
+            <summary>
+The ServerCertificate for the UA Endpoint.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.ApplicationName">
+            <summary>
+The OPC Category of the Server, e.g. OPC DA, OPC HDA, etc.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.ProductUri">
+            <summary>
+The ProductUri of the UA Endpoint.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.ApplicationUri">
+            <summary>
+The ApplicationUri of the UA Endpoint.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.EndpointUrl">
+            <summary>
+The Url of the Endpoint. Needed to connect to that Endpoint.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.MessageSecurityMode">
+            <summary>
+The MessageSecurityMode used for the UA connection.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcCmn.EndpointIdentifier.SecurityPolicyUri">
+            <summary>
+The SecurityPolicy used for the UA connection.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcCmn.EndpointIdentifier.#ctor">
+            <summary>
+Internal constructor prevents construction outside of this assembly.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcCmn.EndpointIdentifier">
+            <summary>
+Provides additional data required to establish a connection to an UA Endpoint.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcCmn.ServerCategory">
+            <summary>
+Using the enumerator ServerCategory the type of the OPC Servers can be specified.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.ServerCategory.OPCUA">
+            <summary>
+Server supports the OPC Specification OPC Unified Architecture
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.ServerCategory.OPCXMLDA">
+            <summary>
+Server supports the OPC Specification OPC XML DA 1.01
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.ServerCategory.OPCHDA">
+            <summary>
+Server supports the OPC Specification OPC HDA 1.10
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.ServerCategory.OPCAE">
+            <summary>
+Server supports the OPC Specification OPC AE 1.10
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.ServerCategory.OPCDX">
+            <summary>
+Server supports the OPC Specification OPC DX 1.00
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcCmn.ServerCategory.OPCDA">
+            <summary>
+Server supports the OPC Specification OPC DA 2.05A or OPC DA 3.00
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemIdentifier.#ctor(System.String,System.String,System.Object)">
+            <summary>
+Initializes the object with the specified item path, item name and client handle.
+</summary>
+            <param name="itemID">The item's name (ItemID)</param>
+            <param name="itemPath">The item path, in most cases this parameter will be empty.</param>
+            <param name="handleClient">Used to identify the item by handle.</param>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemIdentifier.#ctor(System.String,System.String)">
+            <summary>
+Initializes the object with the specified item path and item name.
+</summary>
+            <param name="itemID">The item's name (ItemID)</param>
+            <param name="itemPath">The item path, in most cases this parameter will be empty.</param>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcDaClient.ItemIdentifier.#ctor">
+            <summary>
+Initializes the object with default values.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemIdentifier.ResultID">
+            <summary>
+The error id for the result of an operation on an item. Whenever an Item-Error occurs during an OPC call (e.g. unknown ItemName, trying to write readOnly Items, etc.) the error code will be stored in this object of the associated ItemIdentifier. 
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemIdentifier.DataType">
+            <summary>
+The requested .NET data type for the item.
+Could be changed by the server if a conversion is not possible. If this property is not set, the native (canonical) data type of the item in the OPC Server will be provided. In this case the .NET OPC API sets the data type during the first use of the instance ItemIdentifier.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemIdentifier.ClientHandle">
+            <summary>
+A unique item identifier assigned by the client. The ClientHandle will be returned together with the value of this Item in the DataChange event. Because ClientHandle being of type object, any .NET-Type can be used here, e.g. a TextBox Control or an object that contains information about further processing of the data. In the DataChanged event handler the ClientHandle can identify the associated object within the application.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemIdentifier.ServerHandle">
+            <summary>
+A unique item identifier assigned by the server.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemIdentifier.ItemPath">
+            <summary>
+When accessing OPC XML-DA Servers here the optional ItemPath can be defined. When accessing COM OPC Data Access Servers this property will be ignored.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ItemIdentifier.ItemName">
+            <summary>
+Contains the item’s name (ItemID) of an OPC Data Access Item.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ItemIdentifier">
+            <summary>
+The class is used for identification of OPC Items. Instances of this class are passed to all methods as ref-parameter (in/out). When using the same item frequently, this information is used to optimize OPC function calls. For this reason the objects should be reused for Read and Write actions and not being reinitialized for every single call.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.OPCException.ResultID">
+            <summary>
+ResultID property that contains all the information.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.OPCException">
+            <summary>
+Used to raise an exception associated with a specified result code.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ResultID.Succeeded">
+            <summary>
+This property indicates if ResultID contains the code of a successful operation or not, without checking the code itself.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ResultID.Description">
+            <summary>
+The description of the error, language depends on the locale.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ResultID.Name">
+            <summary>
+Contains the string-representation of the code.
+</summary>
+        </member>
+        <member name="P:Kepware.ClientAce.OpcDaClient.ResultID.Code">
+            <summary>
+Contains the code transferred by the server for the particular action.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ResultID">
+            <summary>
+Contains a unique identifier for a result code and the associated string-representation and a language (local) dependant description of the occurred error. ResultIDs are used to indicate Itemerrors and are also part of OPCExceptions.
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcDaClient.ReturnCode">
+            <summary>
+The enumerator ReturnCode indicates the success of a function call. This enumerator is used by different methods and shows the occurrence of quality changes or errors.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ReturnCode.UNSUPPORTEDUPDATERATE">
+            <summary>
+The requested update rate is not supported by the server.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ReturnCode.ITEMERRORANDQUALITYBAD">
+            <summary>
+For at least one item an error was returned during operation AND at least one item (the same or a different one) the returned quality was not good.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ReturnCode.QUALITYNOTGOOD">
+            <summary>
+For at least one item the returned quality was not good.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ReturnCode.ITEMERROR">
+            <summary>
+For at least one item an error was returned during operation.
+</summary>
+        </member>
+        <member name="F:Kepware.ClientAce.OpcDaClient.ReturnCode.SUCCEEDED">
+            <summary>
+The function returned successfully.
+</summary>
+        </member>
+        <member name="M:Kepware.ClientAce.OpcCmn.PkiCertificate.#ctor(System.String,System.String,System.String,System.Int32,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32)">
+Construction
+
+<summary>
+Internal constructor prevents construction outside of this assembly.
+</summary></member>
+        <member name="T:Kepware.ClientAce.OpcCmn.PkiCertificate">
+            <summary>
+Encapsulates a X509 certificate
+</summary>
+        </member>
+        <member name="T:Kepware.ClientAce.OpcCmn.WinStoreLocation">
+            <summary>
+Using the enumerator WinStoreLocation the location for the windows certificate store can be specified.
+</summary>
+        </member>
+        <member name="T:UaPkiCertificateCollection">
+UaPkiCertificateCollection 
+*  OPC UA specific certificate collection. 
+
+</member>
+        <member name="T:UaPkiCertificate.Validity">
+Validity Enumeration 
+</member>
+        <member name="T:UaPkiCertificateInfo">
+OPC UA specific certificate information. 
+</member>
+        <member name="T:UaPkiRsaKeyPair">
+UaPkiRsaKeyPair 
+
+</member>
+        <member name="T:UaPkiPrivateKey">
+Wrapper class for a private key
+
+</member>
+        <member name="T:UaPkiPublicKey.KeyType">
+@brief KeyType Enumeration
+</member>
+        <member name="T:UaPkiPublicKey">
+UaPkiPublicKey 
+</member>
+        <member name="T:UaPkiIdentity">
+Identity for certificate issuer and subject.
+
+</member>
+        <member name="M:LibT.#ctor">
+construction / destruction
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.deleteMonitoredItemsComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaStatusCodeArray!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send deleteMonitoredItems results. 
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.setMonitoringModeComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaStatusCodeArray!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send setMonitoringMode results. 
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.modifyMonitoredItemsComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaMonitoredItemModifyResults!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send modifyMonitoredItems results. 
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.createMonitoredItemsComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaMonitoredItemCreateResults!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send createMonitoredItems results. 
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.newEvents(System.UInt32!System.Runtime.CompilerServices.IsLong,UaEventFieldLists*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send new events.
+      This callback function provides the event notification for a subscription.
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.dataChange(System.UInt32!System.Runtime.CompilerServices.IsLong,UaMonitoredItemNotifications!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send changed data.
+      This callback function provides the data notification for a subscription.
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.notificationsMissing(System.UInt32!System.Runtime.CompilerServices.IsLong,System.UInt32!System.Runtime.CompilerServices.IsLong,System.UInt32!System.Runtime.CompilerServices.IsLong)">
+Informs the client about missing notification messages.
+      The client SDK monitors the sequence numbers of the received data and event notifications and reports
+      gaps in the sequence numbers using this callback method. The client can use the UaSubscription::republish 
+      method to request the missing notifications.
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.keepAlive(System.UInt32!System.Runtime.CompilerServices.IsLong)">
+Send subscription keep alive. 
+      This callback function provides the keep alive messages sent by the server if no changed data or events are available. 
+
+</member>
+        <member name="M:UaClientSdk.UaSubscriptionCallback.subscriptionStatusChanged(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send subscription state change. 
+      This callback function informs the client if the status of a subscription changes. This can happen after a connection error that
+      was longer than the lifetime of the subscription. The lifetime is calculated from PublishingInterval x MaxKeepAliveCount x LifetimeCount.
+      A client must create a new subscription to continue data or event monitoring if this callback indicates a bad status for the subscripiton.
+      UaSession::deleteSubscription should be called even if the subscription is not longer valid in the server to clear
+      the client side subscription object.
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.deleteReferencesComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaStatusCodeArray!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send deleteReferences result. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.deleteNodesComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaStatusCodeArray!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send deleteNodes result. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.addReferencesComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaStatusCodeArray!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send addReferences result. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.addNodesComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaAddNodesResults!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send addNodes result. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.callComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaClientSdk.CallOut!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send call result. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.writeComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaStatusCodeArray!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send write results. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.readComplete(System.UInt32!System.Runtime.CompilerServices.IsLong,UaStatus!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDataValues!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDiagnosticInfos!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Send read results. 
+
+</member>
+        <member name="M:UaClientSdk.UaSessionCallback.connectionStatusChanged(System.UInt32!System.Runtime.CompilerServices.IsLong,UaClientSdk.UaClient.ServerStatus)">
+Send changed status. 
+
+</member>
+        <member name="F:UaClientSdk.SubscriptionSettings.priority">
+Defines the relative priority of this subscription within the session.
+If multiple subscriptions need to send notifications to the client, the server will send notifications to the subscription with the highest priority first.
+
+</member>
+        <member name="F:UaClientSdk.SubscriptionSettings.maxNotificationsPerPublish">
+The maximum number of notifications that the client wishes to receive in a single publish response. This is one way for the client to limit the
+    memory consumption if that resources is very rare.
+
+</member>
+        <member name="F:UaClientSdk.SubscriptionSettings.maxKeepAliveCount">
+If the server has no notifications pending for the period of time defined by (MaxKeepAliveCount * PublishingInterval) the server will send a 
+keep alive message to the client. Like that client and server know that the other side is still alive even if no data is exchanged for some time.
+
+</member>
+        <member name="F:UaClientSdk.SubscriptionSettings.lifetimeCount">
+The subscripion has a lifetime that is defined by multiples of the publishingInterval.
+
+    In other words if the client can't communicate with the server for a period of time shorter than (lifetimeCount * publishingInterval) then the 
+    subscription is stil available in the server. After that the server will delete the subscription.
+    With a publishingInterval of 1000ms, the default is 20 minutes like the default lifetime of the session.
+    Please make sure you are adjusting the lifetimeCount if you change the publishingInterval.
+
+</member>
+        <member name="F:UaClientSdk.SubscriptionSettings.publishingInterval">
+The publishingInterval defines the cyclic rate in milliseconds that the subscription is being requested to return notifications to the client. 
+</member>
+        <member name="M:UaClientSdk.SubscriptionSettings.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.SubscriptionSettings.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.SubscriptionSettings">
+The SubscriptionSettings class contains the settings for a Subscription. 
+</member>
+        <member name="M:UaClientSdk.CallOut.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.CallOut.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.CallOut">
+The CallOut class contains the settings for a call request.
+</member>
+        <member name="M:UaClientSdk.CallIn.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.CallIn.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.CallIn">
+The CallIn class contains the settings for a call request.
+</member>
+        <member name="M:UaClientSdk.DeleteAtTimeDetail.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.DeleteAtTimeDetail.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.DeleteAtTimeDetail">
+The DeleteRawModifiedDetail class contains the data for one item in a HistoryUpdate call for data.
+</member>
+        <member name="M:UaClientSdk.DeleteRawModifiedDetail.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.DeleteRawModifiedDetail.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.DeleteRawModifiedDetail">
+The DeleteRawModifiedDetail class contains the data for one item in a HistoryUpdate call for data.
+</member>
+        <member name="M:UaClientSdk.UpdateDataDetail.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.UpdateDataDetail.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.UpdateDataDetail">
+The UpdateDataDetail class contains the data for one item in a HistoryUpdate call for data.
+</member>
+        <member name="F:UaClientSdk.HistoryReadEventResult.m_events">
+The events for the requested time frame and event filter 
+</member>
+        <member name="F:UaClientSdk.HistoryReadEventResult.m_continuationPoint">
+Continuation point if the server was not able to return all available data 
+</member>
+        <member name="F:UaClientSdk.HistoryReadEventResult.m_status">
+Result code for the operation 
+</member>
+        <member name="M:UaClientSdk.HistoryReadEventResult.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.HistoryReadEventResult.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.HistoryReadEventResult">
+The HistoryReadDataResult class contains the result for one item in a HistoryRead call for data.
+</member>
+        <member name="M:UaClientSdk.HistoryReadEventContext.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.HistoryReadEventContext.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.HistoryReadEventContext">
+The HistoryReadEventContext class contains the settings for a HistoryReadEvent call.
+</member>
+        <member name="F:UaClientSdk.HistoryReadDataResult.m_modificationInformation">
+Modification information for the provided modified data if the isReadModified flag was set. 
+</member>
+        <member name="F:UaClientSdk.HistoryReadDataResult.m_dataValues">
+The data for the requested time frame 
+</member>
+        <member name="F:UaClientSdk.HistoryReadDataResult.m_continuationPoint">
+Continuation point if the server was not able to return all available data 
+</member>
+        <member name="F:UaClientSdk.HistoryReadDataResult.m_status">
+Result code for the operation 
+</member>
+        <member name="M:UaClientSdk.HistoryReadDataResult.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.HistoryReadDataResult.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.HistoryReadDataResult">
+The HistoryReadDataResult class contains the result for one item in a HistoryRead call for data.
+</member>
+        <member name="M:UaClientSdk.HistoryReadAtTimeContext.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.HistoryReadAtTimeContext.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.HistoryReadAtTimeContext">
+The HistoryReadAtTimeContext class contains the settings for a HistoryReadAtTime call.
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.aggregateConfiguration">
+@brief The aggregateConfiguration parameter allows clients to override the Aggregate configuration
+    * settings supplied by the AggregateConfiguration object in the server on a per call basis. 
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.processingInterval">
+@brief Time interval in milliseconds that is used to calculate one aggregated value from the raw values in the history
+    * database. The time domain is divided into subintervals with the length of the ResampleInterval beginning with the start 
+    * time. If the ResampleInterval is 0, one aggregated value is calculated for the time domain. 
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.endTime">
+@brief End of the time period to read. 
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.startTime">
+@brief Begin of the time period to read. 
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.aggregateType">
+@brief The NodeId of the aggregate used for the calculation of the values. 
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.bReleaseContinuationPoints">
+@brief The flag indicates if the Service call is used to release ContinuationPoints returned from previous calls without 
+    * returning additional data. This allows clients to free resources in the server if the client does not continue the read 
+</member>
+        <member name="F:UaClientSdk.HistoryReadProcessedContext.timeStamps">
+@brief Indicates if the source timestamp, the server timestamp, or both should be returned. The selected timestamp 
+    *  is also used for the selection of the values in the time domain to read. If both are selected, the source timestamp is used. 
+</member>
+        <member name="M:UaClientSdk.HistoryReadProcessedContext.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.HistoryReadProcessedContext.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.HistoryReadProcessedContext">
+The HistoryReadProcessedContext class contains the settings for a HistoryReadProcessed call.
+</member>
+        <member name="M:UaClientSdk.HistoryReadRawModifiedContext.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.HistoryReadRawModifiedContext.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.HistoryReadRawModifiedContext">
+The HistoryReadRawModifiedContext class contains the settings for a HistoryReadRawModified call.
+</member>
+        <member name="M:UaClientSdk.BrowseContext.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.BrowseContext.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.BrowseContext">
+The BrowseContext class contains the settings for a browse request.
+</member>
+        <member name="F:UaClientSdk.ServiceSettings.stringTable">
+@brief UaString table for returned diagnostic information. 
+</member>
+        <member name="F:UaClientSdk.ServiceSettings.auditEntryId">
+@brief An identifier that identifies the Clients security audit log entry associated with this request. 
+</member>
+        <member name="F:UaClientSdk.ServiceSettings.callTimeout">
+@brief The timeout for the service call in milliseconds. 
+</member>
+        <member name="M:UaClientSdk.ServiceSettings.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.ServiceSettings.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.ServiceSettings">
+The ServiceSettings class contains the general settings for a call.
+</member>
+        <member name="F:UaClientSdk.SessionSecurityInfo.doServerCertificateVerify">
+Indicates if the client SDK must verify the server certificate or if this was done already by the application. 
+        The default value is True to force the client SDK to verify the server certificate before establishing the connection.
+
+</member>
+        <member name="F:UaClientSdk.SessionSecurityInfo.serverCertificate">
+Server certificate (public key). 
+</member>
+        <member name="T:UaClientSdk.SessionSecurityInfo">
+The SessionSecurityInfo class contains the security related session settings for connect.
+</member>
+        <member name="F:UaClientSdk.ClientSecurityInfo.clientPrivateKey">
+Client private key 
+</member>
+        <member name="F:UaClientSdk.ClientSecurityInfo.clientCertificate">
+Client certificate (public key) 
+</member>
+        <member name="F:UaClientSdk.ClientSecurityInfo.messageSecurityMode">
+The message security mode used for the connection.
+   * OpcUa_MessageSecurityMode_None
+   * OpcUa_MessageSecurityMode_Sign
+   * OpcUa_MessageSecurityMode_SignAndEncrypt
+
+</member>
+        <member name="F:UaClientSdk.ClientSecurityInfo.sSecurityPolicy">
+The name of the security policy used for the connection. 
+    * OpcUa_SecurityPolicy_None           "http://opcfoundation.org/UA/SecurityPolicy#None" for security disabled
+    * OpcUa_SecurityPolicy_Basic128Rsa15  "http://opcfoundation.org/UA/SecurityPolicy#Basic128Rsa15"
+    * OpcUa_SecurityPolicy_Basic256       "http://opcfoundation.org/UA/SecurityPolicy#Basic256"
+
+</member>
+        <member name="T:UaClientSdk.ClientSecurityInfo">
+The ClientSecurityInfo class contains the security related settings to create a secure channel.
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.nMaxOperationsPerServiceCall">
+@brief The maximum number of operations used in a Service call.
+    *
+    * The OPC UA server may restrict the message size and array sizes. This parameter provides a way
+    * to reduce the number of operations like nodes to read in a Read call to a number that works. 
+    * The caller of the API does not need to care about the limitations. The SDK will send several 
+    * Service calls if number of operations provided by the caller exceeds the maximum number the server 
+    * accepts. The value 0 indicates no limitation.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.nWatchdogTimeout">
+@brief The timeout for watchdog calls in milliseconds. After one unsuccessful call
+    *
+    * the timeout will be two times this value for the next call.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.endpointDescriptions">
+@brief The endpoint descriptions returned from the server during session creation.
+    *
+    * The list must be verified with the list returned during discovery at the first 
+    * connect to make sure the discovery server provided the right list and the client 
+    * was able to choose the most secure setting.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.sServerUri">
+@brief The Server Uri of the server to connect through a gateway server.
+    *
+    * This value is only specified if the EndpointDescription has a gatewayServerUri.
+    * This value is the applicationUri from the EndpointDescription which is the 
+    * applicationUri for the underlying Server.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.bRetryInitialConnect">
+@brief A flag indicating if the client SDK should continue to try a connect establishment in the background if the initial connect fails.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.bAutomaticReconnect">
+@brief A flag indicating if the client SDK should try to reconnect in the case of a connection error. 
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.nWatchdogTime">
+@brief The time between watchdog checks in milliseconds. 
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.nConnectTimeout">
+@brief The timeout for the connect call in milliseconds. 
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.nSecureChannelLifetime">
+@brief The lifetime of the SecureChannel in milliseconds before it gets renewed.
+    * This is the time the key pair exchanged during secure channel establishment are valid. The stack starts
+    * after 75% of the lifetime the renew process that exchanges new key pairs. The default lifetime is one hour.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.sLocaleId">
+@brief The locale ID uses for the session.
+    * Examples are
+    * - "en" for English
+    * - "en-US" for English (US)
+    * - "de" for German
+    * - "de-DE" for German (Germany)
+    * - "de-AT" for German (Austria)
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.nSessionTimeout">
+@brief The timeout for the application session in milliseconds.
+    *
+    * The client library ensures that the session does not time out as long as the client application 
+    * does not call disconnect. The session can timeout if the network connection is broken for longer
+    * than the defined session timeout. A long timeout ensures that the established application session
+    * can be reused after the longer network interruption. Default value is 20 minutes. This timeout has 
+    * no affect for the individual timeout for a service call (can be defined per call). This timeout is
+    * only used to ensure that the server is able to release resources if a client is disconnected for a
+    * long time.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.clientConnectionId">
+@brief The client defined connection Id. 
+    *
+    * The connection Id is returned in all session callbacks to distinguish between callbacks
+    * for different connections if the same callback interface is used for more than one connections.
+    * Can be 0 if not needed.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.applicationType">
+@brief The Client Application Type.
+    * OpcUa_ApplicationType_Client 
+    * OpcUa_ApplicationType_ClientAndServer
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.sSessionName">
+@brief The Session Name. This name should be unique for the instance of the client.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.sProductUri">
+@brief The Client Product Uri.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.sApplicationName">
+@brief The Client Application Name.
+
+</member>
+        <member name="F:UaClientSdk.SessionConnectInfo.sApplicationUri">
+@brief The Client Application Uri.
+
+</member>
+        <member name="M:UaClientSdk.SessionConnectInfo.Dispose">
+Destructor 
+</member>
+        <member name="M:UaClientSdk.SessionConnectInfo.#ctor">
+Constructor 
+</member>
+        <member name="T:UaClientSdk.SessionConnectInfo">
+The SessionConnectInfo class contains the session settings for connect.
+</member>
+        <member name="T:UaClientSdk.UaClient.ServerStatus">
+ServerStatus: OPC UA server status 
+</member>
+        <member name="T:UaClientSdk.UaClient">
+Namespace class for OPC UA Client Library.
+</member>
+        <member name="T:UaHistoryEventFieldList">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_HistoryEventFieldList.
+ *
+ *  This class encapsulates the native OpcUa_HistoryEventFieldList structure
+ *  and handles memory allocation and cleanup for you.
+ *  UaHistoryEventFieldList uses implicit sharing to avoid needless copying and to boost the performance.
+ *  Only if you modify a shared HistoryEventFieldList it creates a copy for that (copy-on-write).
+ *  So assigning another UaHistoryEventFieldList or passing it as parameter needs constant time and is nearly as fast as assigning a pointer.
+
+</member>
+        <member name="T:UaEndpointDescription">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_EndpointDescription.
+ *
+ *  This class encapsulates the native OpcUa_EndpointDescription structure
+ *  and handles memory allocation and cleanup for you.
+ *  UaEndpointDescription uses implicit sharing to avoid needless copying and to boost the performance.
+ *  Only if you modify a shared EndpointDescription it creates a copy for that (copy-on-write).
+ *  So assigning another UaEndpointDescription or passing it as parameter needs constant time and is nearly as fast as assigning a pointer.
+
+</member>
+        <member name="T:UaUserTokenPolicy">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_UserTokenPolicy.
+ *
+ *  This class encapsulates the native OpcUa_UserTokenPolicy structure
+ *  and handles memory allocation and cleanup for you.
+ *  UaUserTokenPolicy uses implicit sharing to avoid needless copying and to boost the performance.
+ *  Only if you modify a shared UserTokenPolicy it creates a copy for that (copy-on-write).
+ *  So assigning another UaUserTokenPolicy or passing it as parameter needs constant time and is nearly as fast as assigning a pointer.
+
+</member>
+        <member name="T:UaApplicationDescription">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_ApplicationDescription.
+ *
+ *  This class encapsulates the native OpcUa_ApplicationDescription structure
+ *  and handles memory allocation and cleanup for you.
+ *  UaApplicationDescription uses implicit sharing to avoid needless copying and to boost the performance.
+ *  Only if you modify a shared ApplicationDescription it creates a copy for that (copy-on-write).
+ *  So assigning another UaApplicationDescription or passing it as parameter needs constant time and is nearly as fast as assigning a pointer.
+
+</member>
+        <member name="T:UaEventFilter">
+@ingroup CppBaseLibraryClass
+ * Wrapper class for the OPC UA EventFilter structure
+ *
+ * The EventFilter provides for the filtering and content selection of Event Subscriptions. 
+ * If an Event Notification conforms to the filter defined by the where parameter of the 
+ * EventFilter, then the Notification is sent to the Client. Each Event Notification includes
+ * the fields defined by the selectClauses parameter of the EventFilter.
+
+</member>
+        <member name="T:UaSimpleAttributeOperand">
+OPC UA SimpleAttributeOperand used in ContentFilterElement or UaEventFilter.
+ *
+ * This class is used to build and hold an OPC UA SimpleAttributeOperand used in the UaContentFilterElement or in the UaEventFilter. 
+ * The selectClause and whereClause parameters of an EventFilter are specified with the SimpleAttributeOperand structure. The structure is 
+ * composed of
+ * - typeId (NodeId) NodeId of the type definition node. This is an event type node for event filters.
+ *                   In some cases the same BrowsePath will apply to multiple EventTypes. If the Client specifies the BaseEventType in the 
+ *                   SimpleAttributeOperand then the Server shall evaluate the BrowsePath without considering the Type. The default value for the
+ *                   typeId set by the class is the BaseEventType.
+ * - browsePath[] (QualifiedName) This parameter specifies a relative path using a list of BrowseNames. The list of BrowseNames in an event filter
+ *                                represents the nodes from an EventType to the event field of interest following hierarchical forward references.
+ *                                All Nodes followed by the browsePath shall be of the NodeClass Object or Variable.
+ *                                If this list is empty the Node is the instance of the TypeDefinition e.g. the instance of a Condition object.
+ * - attributeId (IntegerId) The SimpleAttributeOperand structure allows the Client to specify any Attribute, however, the
+ *                           Server is only required to support the Value Attribute (OpcUa_Attributes_Value) for Variable Nodes 
+ *                           and the NodeId Attribute (OpcUa_Attributes_NodeId)for Object Nodes.
+ *                           The default value set by this class is the Value attribute.
+ * - indexRange (NumericRange) This parameter is used to identify a single element of an array, or a single range of indexes for an array.
+ *
+ * This class is concrete implementation of the abstract UaFilterOperand. It specifies any attribute of an object or variable node using 
+ * a TypeDefinition and a relative path constructed from BrowseNames.
+
+</member>
+        <member name="T:UaLiteralOperand">
+OPC UA LiteralOperand used in ContentFilterElement.
+ *
+ *  This class is used to build and hold an OPC UA LiteralOperand used in the UaContentFilterElement. This class is 
+ *  concrete implementation of the abstract UaFilterOperand. It contains a literal value used in a filter.
+
+</member>
+        <member name="T:UaElementOperand">
+OPC UA ElementOperand used in ContentFilterElement.
+ *
+ *  This class is used to build and hold an OPC UA ElementOperand used in the UaContentFilterElement. This class is 
+ *  concrete implementation of the abstract UaFilterOperand. It contains a content filter element. This type is used 
+ *  to build a logic tree of sub elements by linking the operand of one element to a sub-element
+
+</member>
+        <member name="T:UaContentFilterElement">
+OPC UA ContentFilterElement used in ContentFilter.
+ *
+ *  This class is used to build and hold an OPC UA ContentFilterElement used in the UaContentFilter.
+ *  The content filter elements and the element filter operands (UaElementOperand derived from UaFilterOperand) 
+ *  can be used to build a filter hierarchy.
+
+</member>
+        <member name="T:UaFilterOperand.FilterOperandType">
+FilterOperandType enumeration 
+</member>
+        <member name="T:UaFilterOperand">
+OPC UA FilterOperand used in ContentFilterElement.
+ *
+ *  This class is used to build and hold an OPC UA FilterOperand used in the UaContentFilterElement. This abstract 
+ *  class can not be used directly. The three concrete classes UaElementOperand, UaLiteralOperand and UaSimpleAttributeOperand 
+ *  can be used. The content filter elements and the element filter operands (UaElementOperand) 
+ *  can be used to build a filter hierarchy.
+
+</member>
+        <member name="T:UaContentFilter">
+OPC UA ContentFilter used in event filters and the Query service.
+ *
+ *  This class is used to build and hold an OPC UA ContentFilter used in the event filter of event 
+ *  monitored items and as filter parameter for the Query service.
+
+</member>
+        <member name="F:UaUserIdentityTokenIssuedToken.sEncryptionAlgorithm">
+@brief Encryption algorithm used
+</member>
+        <member name="F:UaUserIdentityTokenIssuedToken.userTokenData">
+@brief User token data 
+</member>
+        <member name="T:UaUserIdentityTokenIssuedToken">
+@brief Class representing a IssuedToken user identity token.
+
+ *  The class is derived from UaUserIdentityToken and is used if IssuedToken based  
+ *  user identity is provided.
+
+</member>
+        <member name="F:UaUserIdentityTokenCertificate.userCertificateData">
+@brief User certificate data 
+</member>
+        <member name="T:UaUserIdentityTokenCertificate">
+@brief Class representing a Certificate user identity token.
+
+ *  The class is derived from UaUserIdentityToken and is used if certificate based  
+ *  user identity is provided.
+
+</member>
+        <member name="F:UaUserIdentityTokenUserPassword.sPassword">
+@brief Password string
+</member>
+        <member name="F:UaUserIdentityTokenUserPassword.sUserName">
+@brief User name string
+</member>
+        <member name="T:UaUserIdentityTokenUserPassword">
+@brief Class representing an User and Password user identity token.
+
+ *  The class is derived from UaUserIdentityToken and is used if user name and password based  
+ *  user identity is provided.
+
+</member>
+        <member name="T:UaUserIdentityTokenAnonymous">
+@brief Class representing an anonymous user identity token.
+
+ *  The class is derived from UaUserIdentityToken and is the default user settings if no  
+ *  specific user identity is provided.
+
+</member>
+        <member name="T:UaUserIdentityToken">
+@brief Base class for the different user identity token classes.
+
+ *  The specific user identity tokens are represented by the derived classes UaUserIdentityTokenAnonymous and 
+ *  UaUserIdentityTokenUserPassword. This base class is only used in method signatures.
+
+</member>
+        <member name="D:UaDiagnosticInfoRawArray">
+An array of UaDiagnosticInfo 
+</member>
+        <member name="M:UaDiagnosticInfo.#ctor">
+construction. 
+</member>
+        <member name="M:UaDiagnosticInfo.Dispose">
+destruction 
+</member>
+        <member name="T:UaDiagnosticInfo">
+UaDiagnosticInfo 
+ *  @brief The class UaDiagnosticInfo contains the diagnostic information in full format.
+ *  It is not possible to create plane copies of this Class.
+
+</member>
+        <member name="T:UaStatus">
+UaStatus 
+ *  @brief The class UaStatus handles status codes, conversions of the status code and diagnostic information.
+ *  Derived from UaStatusCode.
+
+</member>
+        <member name="M:UaStatusCode.statusCode">
+Get the status code value 
+</member>
+        <member name="M:UaStatusCode.isNotBad">
+Checks if the status code is not BAD 
+</member>
+        <member name="M:UaStatusCode.isBad">
+Checks if the status code is BAD 
+</member>
+        <member name="M:UaStatusCode.isNotUncertain">
+Checks if the status code is not UNCERTAIN 
+</member>
+        <member name="M:UaStatusCode.isUncertain">
+Checks if the status code is UNCERTAIN 
+</member>
+        <member name="M:UaStatusCode.isNotGood">
+Checks if the status code is not GOOD 
+</member>
+        <member name="M:UaStatusCode.isGood">
+Checks if the status code is GOOD 
+</member>
+        <member name="T:UaStatusCode">
+@brief The class encapsulated OPC UA status codes and conversions from ant to Classic OPC codes.
+
+</member>
+        <member name="T:UaTraceHook">
+@ingroup CppBaseLibraryClass
+ *  Interface used to register a trace hook
+
+</member>
+        <member name="T:UaTrace.TraceLevel">
+@brief Definition of the TraceLevel Enumeration
+</member>
+        <member name="T:UaTrace">
+@ingroup CppBaseLibraryClass
+ *  A class used for trace outputs (error, information,...).
+
+</member>
+        <member name="T:UaMutexRefCounted">
+UaMutexRefCounted 
+ *  @brief Reference counted mutex implementation.
+ *  A derived class of UaMutex which provides the possibility to control the lifetime of the mutex object based on its reference counter.
+
+</member>
+        <member name="T:UaMutexLocker">
+UaMutexLocker 
+ *  @brief Auto lock and unlock class for Mutex class.
+ *  The UaMutexLocker class is a convenience class that simplifies locking and unlocking of a mutex.
+ *  Locking and unlocking an UaMutex in complex functions and statements or in exception handling code is error-prone 
+ *  and difficult to debug. UaMutexLocker can be used in such situations to ensure that the state of the mutex is always well-defined.
+ *  UaMutexLocker should be created within a function where an UaMutex needs to be locked. 
+ *  The mutex is locked when UaMutexLocker is created. 
+ *  You can unlock the mutex with unlock(). 
+ *  If locked, the mutex will be unlocked when the UaMutexLocker is destroyed.
+ *  It is not possible to create plane copies of this Class.
+
+</member>
+        <member name="T:UaMutex">
+@ingroup CppBaseLibraryClass
+ *  @brief The UaMutex class provides access serialization between threads.
+ *  The purpose of a UaMutex is to protect an object, data structure or section of code so that only one thread 
+ *  can access it at a time (this is similar to the Java synchronized keyword). 
+ *  It is usually best to use a mutex with a UaMutexLocker since this makes it easy to ensure that 
+ *  locking and unlocking are performed consistently.
+ *  It is not possible to create plane copies of this Class.
+
+</member>
+        <member name="M:AscDaServer.#ctor(AscDaServer!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Prohibit use of copy constructor and = operator **********
+</member>
+        <member name="M:AscDaServer.getProperties(std.vector&lt;AscItemIdentifier&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.vector&lt;System.UInt32&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Boolean,System.Boolean,std.vector&lt;AscItemProperties&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Get item properties
+
+</member>
+        <member name="M:AscDaServer.browse(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt32,AscOpc.BrowseFilter,std.vector&lt;System.UInt32&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Boolean,System.Boolean,std.vector&lt;AscBrowseElement&gt;*!System.R">
+Browse OPC server adress space
+
+</member>
+        <member name="M:AscDaServer.subscriptionCancel(System.UInt32)">
+Cancel Subscription. 
+
+</member>
+        <member name="T:AscDaServer">
+General OPC Data Access class which is hiding all specifications.
+* This is the main class for connecting with any OPC DA Server.
+
+</member>
+        <member name="M:AscUaEndpointIdentifier.GetApplicationUri">
+Methods *********************
+</member>
+        <member name="M:AscUaEndpointIdentifier.op_Assign(AscUaEndpointIdentifier!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Operators ********************
+</member>
+        <member name="M:AscUaEndpointIdentifier.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscServerIdentifier.#ctor">
+Prohibit use of default constructor **********
+</member>
+        <member name="M:AscServerIdentifier.Reset(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,AscOpc.ServerCategory)">
+Methods **********************
+</member>
+        <member name="M:AscServerIdentifier.op_Assign(AscServerIdentifier!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Operators ********************
+</member>
+        <member name="M:AscServerIdentifier.#ctor(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,AscOpc.ServerCategory)">
+Constructor ******************
+</member>
+        <member name="M:AscCmnClient.#ctor(AscCmnClient!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Prohibit use of copy constructor and = operator **********
+</member>
+        <member name="M:AscCmnClient.clsidFromProgId(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Get the CLSID for a give node name and ProgID
+
+</member>
+        <member name="M:AscCmnClient.enumComServer(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Boolean,std.vector&lt;AscOpc.ServerCategory&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.vector&lt;AscServerIdentifier&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Enumerates the Com OPC servers for the given node name
+
+</member>
+        <member name="M:AscCmnClient.getCertificateForEndpoint(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,_OpcUa_MessageSecurityMode,UaByteString*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Get the server certificate from the server
+
+</member>
+        <member name="M:AscCmnClient.enumUaEndpoints(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.vector&lt;AscUaEndpointIdentifier&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Enumerates the OPC UA endpoints for the given discovery URL
+
+</member>
+        <member name="M:AscCmnClient.enumUaServer(std.basic_string&lt;System.UInt16,std.char_traits{System.UInt16},std.allocator&lt;System.UInt16&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.vector&lt;AscServerIdentifier&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Enumerates the OPC UA servers for the given node name
+
+</member>
+        <member name="M:AscCmnClient.#ctor">
+construction / destruction
+
+</member>
+        <member name="M:AscItemValue.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscBrowseElement.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscItemProperties.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscItemProperty.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscItemIdentifier.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscServerConnectInfo.#ctor">
+Constructor ******************
+</member>
+        <member name="M:AscServerSecurityInfo.#ctor">
+Constructor ******************
+</member>
+        <member name="T:WindowsStoreLocation">
+WindowsStoreLocation Enumeration 
+</member>
+        <member name="M:op_LeftShift(UaDataStream*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaDateTime!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+define UaDataStream operators for UaDateTime. 
+</member>
+        <member name="T:UaDateTime">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_DateTime.
+ *
+ *  Helper class for modifying UaDateTime elements.
+ *  The UaDateTime class provides date and time functions.
+
+</member>
+        <member name="D:UaVariantObjects">
+A template definition for arrays of UaVariantObjects 
+</member>
+        <member name="T:UaVariantException.Error">
+@brief Enumeration of error definitions
+</member>
+        <member name="T:UaVariantException">
+UaVariantException 
+ *  The UaVariantException class provides a base class 
+ *  for exceptions that can transferred across variants.
+ *  @brief UaVariantException Class.
+
+</member>
+        <member name="M:op_LeftShift(UaDataStream*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaVariant!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+define UaDataStream operators for UaVariant. 
+</member>
+        <member name="T:UaVariant">
+UaVariant 
+ *  @brief Portable UA Variant class.
+ *  Converts Variant into all data types.
+ *  The UaVariant class acts like a union for the most common UA data types.
+
+</member>
+        <member name="T:UaNumericRangeDimension.NumericRangeType">
+NumericRange type enumeration 
+</member>
+        <member name="M:UaExpandedNodeId.serverIndex">
+Get the server index.
+     *  @return the server index.
+
+</member>
+        <member name="M:UaExpandedNodeId.namespaceUri">
+Get the namespace URI.
+     *  @return the namespace URI.
+
+</member>
+        <member name="M:UaExpandedNodeId.nodeId">
+Get the actual node id.
+     *  @return the actual node id.
+
+</member>
+        <member name="T:UaExpandedNodeId">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_ExpandedNodeId.
+
+</member>
+        <member name="M:UaExtensionObject.xml">
+Returns the XML encoded object 
+</member>
+        <member name="M:UaExtensionObject.binary">
+Returns the binary encoded object 
+</member>
+        <member name="M:UaExtensionObject.objectType">
+Returns the encodeable type of the object as structure 
+</member>
+        <member name="M:UaExtensionObject.object">
+Returns a pointer to the object as structure 
+</member>
+        <member name="M:UaExtensionObject.encoding">
+Returns the encoding of the extension object.
+     *  Based on the return value of this method, the extension object contains an object as structure, 
+     *  a binary encoded object or a XML encoded object. 
+</member>
+        <member name="T:UaExtensionObject.ExtensionObjectEncoding">
+@brief Definition of the ExtensionObjectEncoding Enumeration
+</member>
+        <member name="T:UaExtensionObject">
+UaExtensionObject 
+ *  Derived from OpcUa_ExtensionObject.
+
+</member>
+        <member name="M:UaLocalizedText.text">
+Get the text string.
+     *  @return the text string.
+
+</member>
+        <member name="M:UaLocalizedText.locale">
+Get the locale string.
+     *  @return the locale string.
+
+</member>
+        <member name="T:UaLocalizedText">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_LocalizedText.
+
+</member>
+        <member name="T:UaQualifiedName">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_QualifiedName.
+ *  Qualified names are two-part names: namespace index (UInt16) and name (String).
+ *  The name part of QualifiedNames is restricted to 512 characters.
+ *  Derived from OpcUa_QualifiedName.
+
+</member>
+        <member name="M:op_LeftShift(UaDataStream*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaNodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+define UaDataStream operators for UaNodeId. 
+</member>
+        <member name="M:UaNodeId.identifierString">
+Returns the string identifier as string value. 
+</member>
+        <member name="M:UaNodeId.identifierNumeric">
+Returns the numeric identifier as numeric value. 
+</member>
+        <member name="M:UaNodeId.namespaceIndex">
+Returns the namespace index as numeric value. 
+</member>
+        <member name="M:UaNodeId.identifierType">
+Returns the identifier type of the NodeId. 
+        Possible values are
+        - OpcUa_IdentifierType_Numeric = 0x00
+        - OpcUa_IdentifierType_String  = 0x01
+        - OpcUa_IdentifierType_Guid    = 0x02
+        - OpcUa_IdentifierType_Opaque  = 0x03
+
+</member>
+        <member name="M:UaNodeId.toString">
+Converts the identifier of the NodeId to a string.
+
+</member>
+        <member name="M:UaNodeId.compare(_OpcUa_NodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,_OpcUa_NodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Compares two nodeIds and returns true if they are equal.
+     *  @param nodeId1 the source to compare to.
+     *  @param nodeId2 the destination to compare to.
+     *  @return true if the two nodeIds are equal.
+     *  @see operator==
+
+</member>
+        <member name="M:UaNodeId.nodeIdCompare(_OpcUa_NodeId*)">
+Compares another NodeId to the current instance.
+     *  @param pNodeId the UaNodeId to assign.
+     *  @return another NodeId to the current instance.
+
+</member>
+        <member name="M:UaNodeId.op_Inequality(UaNodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Compares another NodeId to the current instance.
+     *  @param other the UaNodeId to assign.
+     *  @return another NodeId to the current instance.
+
+</member>
+        <member name="M:UaNodeId.op_Equality(UaNodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Compares another NodeId to the current instance.
+     *  @param other the UaNodeId to assign.
+     *  @return another NodeId to the current instance.
+
+</member>
+        <member name="M:UaNodeId.op_Assign(UaNodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Assigns another NodeId to the current instance.
+     *  @param other the UaNodeId to assign.
+     *  @return another NodeId to the current instance.
+
+</member>
+        <member name="M:UaNodeId.clone(_OpcUa_NodeId!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Copy OpcUa_NodeId data to a newly allocated OpcUa_NodeId.
+     *  @param source the source of this operation.
+     *  @return a newly allocated OpcUa_NodeId.
+
+</member>
+        <member name="M:UaNodeId.copyTo(_OpcUa_NodeId*)">
+Copy a value to a new destination.
+     *  @param pDst the destination of this operation
+     *  @return a new copy.
+
+</member>
+        <member name="M:UaNodeId.copy">
+Copy OpcUa_NodeId data to a newly allocated OpcUa_NodeId.
+     *  @return a newly allocated OpcUa_NodeId.
+
+</member>
+        <member name="M:UaNodeId.op_Implicit~_OpcUa_NodeId!System.Runtime.CompilerServices.IsConst*">
+Returns the OpcUa_NodeId pointer to the internal data structure.
+     *  @return OpcUa_NodeId pointer to the internal data structure.
+
+</member>
+        <member name="M:UaNodeId.setNodeId(UaByteString!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt16)">
+Set the actual used node id.
+     *  @param id  The byte string identifier.
+     *  @param NsIdx The namespace index.
+
+</member>
+        <member name="M:UaNodeId.setNodeId(UaGuid!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt16)">
+Set the actual used node id.
+     *  @param id  The guid identifier.
+     *  @param NsIdx The namespace index.
+
+</member>
+        <member name="M:UaNodeId.setNodeId(UaString!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.UInt16)">
+Set the actual used node id.
+     *  @param sId  The string identifier.
+     *  @param NsIdx The namespace index.
+
+</member>
+        <member name="M:UaNodeId.setNodeId(System.UInt32!System.Runtime.CompilerServices.IsLong,System.UInt16)">
+Set the actual used node id.
+     *  @param id  The numeric identifier.
+     *  @param NsIdx The namespace index.
+
+</member>
+        <member name="M:UaNodeId.setNamespaceIndex(System.UInt16)">
+Set the namespace index.
+     *  @param NsIdx The namespace index.
+
+</member>
+        <member name="M:UaNodeId.detach(_OpcUa_NodeId*)">
+Reset OpcUa_NodeId structure without clearing the data.
+     *  @param pDst the destination of this operation
+
+</member>
+        <member name="M:UaNodeId.attach(_OpcUa_NodeId!System.Runtime.CompilerServices.IsConst*)">
+Attaches to the native NodeId structure.
+     *  This means UaNodeId takes ownership of the NodeId data
+     *  and clears this in the destructor automatically.
+     *  It does not clear the OpcUa_NodeId structure itself.
+     *  @param pOther Pointer to native OpcUa_NodeId structure.
+
+</member>
+        <member name="M:UaNodeId.clear">
+Clear data. 
+</member>
+        <member name="M:UaNodeId.isNull">
+Checks whether a value is Null or not.
+     *  @return true if Null false if not.
+
+</member>
+        <member name="T:UaNodeId">
+@ingroup CppBaseLibraryClass
+ *  @brief This class encapsulates the native OpcUa_NodeId structure
+ *  and handles memory allocation and cleanup for you.
+ *  UaNodeId uses implicit sharing to avoid needless copying and to boost the performance.
+ *  Only if you modify a shared NodeId it creates a copy for that (copy-on-write).
+ *  So assigning another UaNodeId or passing it as parameter is as fast as assigning a pointer.
+
+</member>
+        <member name="T:UaGuid">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_Guid.
+ *  Helper class for modifying UaGuid elements.
+ *  The UaGuid class stores a Global Unique Identifier (GUID).
+ *  Using Globally Unique IDentifiers is a standard way to globally identify 
+ *  entities in a distributed computing environment.
+ *  Derived from OpcUa_Guid.
+
+</member>
+        <member name="M:op_LeftShift(UaDataStream*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,UaString!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+define UaDataStream operators for UaString. 
+</member>
+        <member name="T:UaString">
+@ingroup CppBaseLibraryClass
+ *  @brief This class encapsulates the native OpcUa_String structure
+ *  and handles memory allocation and cleanup for you.
+ *  Additionally you can extract native UTF-8 (char*) strings or UTF-16 (ushort*) strings
+ *  for further processing in other applications.
+ *  UaString uses implicit sharing to avoid needless copying and to boost the performance.
+ *  Only if you modify a shared string it creates a copy for that (copy-on-write).
+ *  So assigning another UaString or passing it as parameter needs constant time is nearly as fast as assigning a pointer.
+ *  @code
+ *  int foo(OpcUa_String *native)
+ *  {
+ *      UaString str(native);
+ *      UaByteArray array = str.toUtf16();
+ *      const ushort *wszUtf16 = array;
+ *      wprintf(L"%s\\n", wszUtf16);
+ *      str += "abc";
+ *      native = str.toOpcUaString();
+ *  }  
+ *  @endcode
+
+</member>
+        <member name="M:UaByteString.data">
+Get the data of the actual variable.
+     *  @return the data of the actual variable.
+
+</member>
+        <member name="M:UaByteString.length">
+Get the length of the var.
+     *  @return the length of the var.
+
+</member>
+        <member name="T:UaByteString">
+@ingroup CppBaseLibraryClass
+ *  @brief Wrapper class for the UA stack structure OpcUa_ByteString.
+ *  Derived from OpcUa_ByteString.
+
+</member>
+        <member name="T:UaByteRef">
+UaByteRef 
+ *  @brief Helper class for modifying UaByteArray elements.
+
+</member>
+        <member name="M:UaByteArray.op_Subscript(System.UInt32)">
+This function is provided for convenience and behaves like the function above.
+    *  @see operator[](int i)
+
+
+This function is provided for convenience and behaves like the function above.
+ *  @see operator[](int i)
+ *  @param i a variable to compare with.
+ *  @return ByteRef reference.
+
+</member>
+        <member name="M:UaByteArray.op_Subscript(System.Int32)">
+This function is provided for convenience and behaves like the function above.
+    *  @see operator[](int i)
+
+</member>
+        <member name="T:UaByteArray">
+@ingroup CppBaseLibraryClass
+ *  @brief The UaByteArray handles the access to an array of bytes.
+ *  UaByteArray can be used to store both raw bytes (including \\0s) and traditional 8-bit \\0-terminated strings. 
+ *  Using UaByteArray is much more convenient than using const char *. 
+ *  Behind the scenes, it always ensures that the data is followed by a \\0 terminator, 
+ *  and uses implicit sharing (copy-on-write) to reduce memory usage and avoid needless copying of data.
+ *  You don't need to care about resizing or cleaning up the memory.
+
+</member>
+        <member name="M:UaChar.size">
+Get the actual size.
+     *  @return the actual size.
+
+</member>
+        <member name="T:UaChar">
+@ingroup CppBaseLibraryClass
+ *  @brief Helper class for modifying UaChar elements.
+ *  The UaChar class provides a 16-bit Unicode character.
+ *  It is lightweight, so it can be used everywhere.
+
+</member>
+        <member name="M:OpcUa_Guid_Copy(_OpcUa_Guid*,_OpcUa_Guid**)">
+  @brief Copies a guid.
+
+  @param pSource        [in] The guid to copy.
+  @param ppDestination  [bi] The guid to change.
+
+</member>
+        <member name="M:OpcUa_Guid_IsNull(_OpcUa_Guid*)">
+  @brief Returns true if the guid is a null guid.
+
+  @param pGuid [in] The guid to test.
+
+</member>
+        <member name="M:OpcUa_Guid_IsEqual(_OpcUa_Guid*,_OpcUa_Guid*)">
+  @brief Returns true if the two guids are equal.
+
+  @param pGuid1 [in] The first guid to compare.
+  @param pGuid2 [in] The second guid to compare.
+
+</member>
+        <member name="M:OpcUa_Guid_ToString(_OpcUa_Guid*,_OpcUa_String**)">
+  @brief Converts a binary representation of a GUID to a newly created OpcUa_String.
+
+  @param pGuid   [in]  The binary representation.
+  @param pszText [out] The string representation.
+
+</member>
+        <member name="M:OpcUa_Guid_ToStringA(_OpcUa_Guid*,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*)">
+  @brief Converts a binary representation of a GUID to a UTF-8 representation.
+
+  @param pGuid  [in] The binary representation.
+  @param szText [bi] The string representation.
+
+</member>
+        <member name="M:OpcUa_Guid_FromString(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,_OpcUa_Guid*)">
+  @brief Converts a UTF-8 string representation of a GUID to a binary representation.
+
+  @param szText  [in] The string representation.
+  @param pGuid  [out] The binary representation.
+
+</member>
+        <member name="M:OpcUa_Guid_Create(_OpcUa_Guid*)">
+  @brief Creates a new GUID.
+
+  @param pGuid [bi] The buffer to store the new GUID in.
+
+</member>
+        <member name="F:OpcUa_Guid_Null">
+@brief An empty GUID.
+
+</member>
+        <member name="M:OpcUa_ProxyStub_GetStaticConfigString">
+Request the string encoded built configuration of the stack.
+  * @return Pointer to a static string containing the options set by compiler switches. Must not be freed!
+
+</member>
+        <member name="M:OpcUa_ProxyStub_GetConfigString">
+Request the string encoded configuration table.
+  * @return Pointer to a buffer containing the configuration string. Must not be freed!
+
+</member>
+        <member name="M:OpcUa_ProxyStub_GetVersion">
+Request the version string of the proxy stub.
+  * @return Pointer to a static buffer containing the version information in string format. Must not be freed!
+
+</member>
+        <member name="M:OpcUa_ProxyStub_SetNamespaceUris(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte**)">
+Set namespace URI table.
+  * @param a_psNamespaceUris [in] Array of pointers to namespace URIs with OpcUa_Null as last element.
+
+</member>
+        <member name="M:OpcUa_ProxyStub_AddTypes(_OpcUa_EncodeableType**)">
+Add additional types to the known types table.
+  * @param ppTypes [in] Array of pointers to vendor types with OpcUa_Null as last element.
+
+</member>
+        <member name="M:OpcUa_ProxyStub_Clear">
+Clean up proxy stub library. 
+</member>
+        <member name="M:OpcUa_ProxyStub_ReInitialize(_OpcUa_ProxyStubConfiguration*)">
+Set a new proxy stub configuration. Not thread-safe! 
+</member>
+        <member name="M:OpcUa_ProxyStub_Initialize(System.Void*,_OpcUa_ProxyStubConfiguration*)">
+Initialize proxy stub library. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.bTcpStream_ExpectWriteToBlock">
+The network stream should block if not all could be send in one go. Be careful and use this only with client threads. Must not work with all platform layers. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iTcpTransport_MaxChunkCount">
+The default and maximum number of message chunks per message in the server. Affects memory usage. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iTcpTransport_MaxMessageLength">
+The default and maximum size for messages in the server. Affects memory usage. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iTcpConnection_DefaultChunkSize">
+The default (and requested) size for message chunks. Affects network performance and memory usage. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iTcpListener_DefaultChunkSize">
+The default and maximum size for message chunks in the server. Affects network performance and memory usage. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.bTcpListener_ClientThreadsEnabled">
+If true, the TcpListener request a thread per client from the underlying socketmanager. Must not work with all platform layers. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.uSecureListener_ThreadPool_Timeout">
+If the add operation blocks on a full job queue, this value sets the max waiting time. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.bSecureListener_ThreadPool_BlockOnAdd">
+If MaxJobs is reached the add operation can block or return an error. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSecureListener_ThreadPool_MaxJobs">
+The length of the queue with jobs waiting for a free thread. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSecureListener_ThreadPool_MaxThreads">
+The maximum number of threads in the thread pool 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSecureListener_ThreadPool_MinThreads">
+The minimum number of threads in the thread pool. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.bSecureListener_ThreadPool_Enabled">
+Be careful! Enabling the threadpool has severe implications on the behavior of your server! 
+Controls wether the secure listener uses a thread pool to dispatch received requests. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSerializer_MaxMessageSize">
+The maximum number of bytes per message in total. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSerializer_MaxArrayLength">
+Maximum number of elements in an array accepted by the serializer. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSerializer_MaxByteStringLength">
+The largest byte string accepted by the serializer. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSerializer_MaxStringLength">
+The largest string accepted by the serializer. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.iSerializer_MaxAlloc">
+Security constraints for the serializer. Set this values carefully. 
+The largest size for a memory block the serializer can do when deserializing a message. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.uProxyStub_Trace_Level">
+Configure the level of messages traced. See config.h for values. 
+</member>
+        <member name="F:_OpcUa_ProxyStubConfiguration.bProxyStub_Trace_Enabled">
+Globally enable/disable trace output from the stack (exclude platformlayer) 
+</member>
+        <member name="T:_OpcUa_ProxyStubConfiguration">
+Holds the runtime configuration values for the proxy stub modules.  
+    There may be some interference with the endpoint configuration at this time. 
+    Negative numeric values mean to use default values. 
+</member>
+        <member name="M:OpcUa_EncodeableObject_Decode(_OpcUa_EncodeableType!System.Runtime.CompilerServices.IsConst*,_OpcUa_InputStream*,System.Void*)">
+  @brief Decode object of specified encodeable object type from input stream into given memory.
+
+  @param pObjectType    [ in]   Type of the object to decode.
+  @param pInputStream   [ in]   Stream with encoded object.
+  @param pObject        [out]   Destination buffer.
+
+</member>
+        <member name="M:OpcUa_EncodeableObject_Encode(_OpcUa_EncodeableType!System.Runtime.CompilerServices.IsConst*,System.Void*,_OpcUa_OutputStream*)">
+  @brief Encode object of specified encodeable object type into output stream.
+
+  @param pObjectType    [ in]   Type of the object to encode.
+  @param pObject        [ in]   The object.
+  @param pOutputStream  [out]   The destination stream.
+
+</member>
+        <member name="M:OpcUa_EncodeableObject_ParseExtension(_OpcUa_ExtensionObject*,_OpcUa_MessageContext*,_OpcUa_EncodeableType*,System.Void**)">
+  @brief Extracts an encodeable object from an extension object.
+
+  @param pExtension         [in]     The extension object to parse.
+  @param pContext           [in]     The message context to use during parsing.
+  @param pType              [in]     The type of object to extract. 
+  @param ppEncodeableObject [in/out] Pointer to the encodeable object.
+
+</member>
+        <member name="M:OpcUa_EncodeableObject_CreateExtension(_OpcUa_EncodeableType*,_OpcUa_ExtensionObject*,System.Void**)">
+  @brief Creates an Encodeable Object at the given ExtensionObject.
+
+  @param pType              [in]     The type of the object. 
+  @param pExtension         [in/out] The extension object to which the encodeable object gets attached.
+  @param ppEncodeableObject [in/out] Pointer to the encodeable object.
+
+</member>
+        <member name="M:OpcUa_EncodeableObject_Delete(_OpcUa_EncodeableType*,System.Void**)">
+  @brief Deletes an encodeable object.
+
+  @param pType        [in]     The type of the object. 
+  @param ppEncodeable [in/out] The encodeable object.
+
+</member>
+        <member name="M:OpcUa_EncodeableObject_Create(_OpcUa_EncodeableType*,System.Void**)">
+  @brief Creates and initializes an encodeable object.
+
+  @param pType        [in]  The type of the object to create. 
+  @param ppEncodeable [out] The new encodeable object.
+
+</member>
+        <member name="M:OpcUa_EncodeableTypeTable_Find(_OpcUa_EncodeableTypeTable*,System.UInt32!System.Runtime.CompilerServices.IsLong,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,_OpcUa_EncodeableType**)">
+  @brief Finds a encodeable object type in a table.
+
+  @param pTable        [in]  The table to search.
+  @param nTypeId       [in]  The type identifier for the encodeable object.
+  @param sNamespaceUri [in]  The namespace uri that qualifies the type identifier.
+  @param ppType        [out] The matching encodeable object type.
+
+</member>
+        <member name="M:OpcUa_EncodeableTypeTable_AddTypes(_OpcUa_EncodeableTypeTable*,_OpcUa_EncodeableType**)">
+  @brief Populates and sorts an encodeable object type table.
+
+  The new types are added to the table if it has already contains types.
+ 
+  @param pTable  [in] The table to update.
+  @param ppTypes [in] A null terminated list of encodeable object types.
+
+</member>
+        <member name="M:OpcUa_EncodeableTypeTable_Delete(_OpcUa_EncodeableTypeTable*)">
+  @brief Clears an encodeable object type table.
+ 
+  @param pTable [in] The table to clear.
+
+</member>
+        <member name="M:OpcUa_EncodeableTypeTable_Create(_OpcUa_EncodeableTypeTable*)">
+  @brief Initializes an encodeable object type table.
+ 
+  @param pTable [in] The table to clear.
+
+</member>
+        <member name="T:_OpcUa_EncodeableTypeTable">
+@brief A table of encodeable object types.
+
+</member>
+        <member name="M:OpcUa_EncodeableType_Compare(_OpcUa_EncodeableType!System.Runtime.CompilerServices.IsConst*,_OpcUa_EncodeableType!System.Runtime.CompilerServices.IsConst*)">
+  @brief Compares two Encodeable Types and returns 0 if they are equal.
+
+  @param pType1 [in]  First operand.
+  @param pType2 [in]  Second operand.
+
+  @return
+
+</member>
+        <member name="T:_OpcUa_EncodeableType">
+@brief Describes an encodeable object.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnCopyTo">
+  @brief Copies content of an encodeable object to another.
+ 
+  @param pSource [in] The source object.
+  @param pValue  [in] The copy of the source object.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnCopy">
+  @brief Creates a copy of an encodeable object.
+ 
+  @param pSource [in] The source object.
+  @param pCopy   [in] The created copy of the source object.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnCompare">
+  @brief Compares two encodeable object.
+ 
+  @param pValue1 [in] The first operand.
+  @param pValue2 [in] The second operand.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnDecode">
+  @brief Decodes an encodeable object.
+ 
+  @param pDecoder [in] The decoder used to deserialize the object.
+  @param pValue   [in] The object to decode.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnEncode">
+  @brief Encodes an encodeable object.
+ 
+  @param pEncoder [in] The encoder used to serialize the object.
+  @param pValue   [in] The object to encode.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnGetSize">
+  @brief Calculates the size the serialized form an encodeable object.
+
+  Returns Bad_NotSupported if it is not possible to calculate the size.
+ 
+  @param pValue   [in]  The object to encode.
+  @param pEncoder [in]  The encoder used to serialize the object.
+  @param pSize    [out] The size of the encoded object in bytes.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnClear">
+  @brief Clear an encodeable object.
+
+  This function must free all memory referenced by the object and set it to a known state.
+ 
+  @param pValue [in] The encodeable object to clear.
+
+</member>
+        <member name="D:OpcUa_EncodeableObject_PfnInitialize">
+  @brief Initializes an encodeable object.
+
+  This function should set the object to a known state. It should not allocate memory.
+ 
+  @param pValue [in] The encodeable object to initialize.
+
+</member>
+        <member name="T:_OpcUa_StatusCodeString">
+@brief use this to eliminate "unused parameter" warnings 
+</member>
+        <member name="M:OpcUa_P_GetConfigString">
+@brief Get config information as string from static buffer. Must not be freed! 
+</member>
+        <member name="M:OpcUa_P_GetVersion">
+@brief Get version information as string from static buffer. Must not be freed! 
+</member>
+        <member name="M:OpcUa_P_Clean(System.Void**)">
+@brief Platform layer clean up. 
+</member>
+        <member name="M:OpcUa_P_Initialize(System.Void**)">
+@brief Platform layer initialization. 
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.TimersCleanup">
+@brief Called before cleanup to stop all active timers and invoke timer delete callbacks.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.TimerDelete">
+@brief Delete the given timer and call the KillCallback when it is guaranteed that no more TimerCallbacks occur.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.TimerCreate">
+@} Crypto and PKI Functions
+@name Timer Functions 
+@{
+@brief Create a timer which calls the TimerCallback every msecInterval milliseconds with pvCallbackData.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.DeletePKIProvider">
+@brief Delete the given PKI provider.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.CreatePKIProvider">
+@brief Create an PKI Provider based on the given certificate store configuration.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.DeleteCryptoProvider">
+@brief Delete the given crypto provider.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.CreateCryptoProvider">
+@} Network Functions 
+@name Crypto and PKI Functions 
+@{
+@brief Create a crypto provider based on the given security policy URI.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.NetworkCleanup">
+@brief Clean up and free all network resources. Called during proxystub cleanup procedure.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.NetworkInitialize">
+@brief Initialize all network resources required by the platform layer. Called during proxystub initialization.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketGetLastError">
+@brief Get the status code for the last error that occurred on the given socket.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketGetPeerInfo">
+@brief Get address information for the peer connected to the given socket socket handle.
+               This function was changed to create a string. The old version only supported IPv4 addresses.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketClose">
+@brief Close the given socket handle.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketWrite">
+@brief Write BufferSize bytes from pBuffer to the given Socket and dont return until all data is copied if bBlock is OpcUa_True.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketRead">
+@brief Copy a maximum of BufferSize bytes from the socket into pBuffer and store the actual number bytes copied in puintBytesRead.
+     *         A *puintBytesRead is interpreted as a shutdown of the inbound direction by the peer.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketManagerServeLoop">
+@brief Invoke the communication message loop for the given socket manager and block for a maximum of msecTimout seconds.
+     *         Caller can decide whether the loop should be executed once or until the shutdown event is signalled to the loop by
+     *         setting bRunOnce approbriately. The implementation decides whether timer callbacks are also invoked during the call.
+     *         This function is mainly intended to process network and timer events in a single threaded environment. In a multi
+     *         threaded environment, this function is executed in loop by a dedicated thread and not by the application.
+     *         If pSocketManager is OpcUa_Null, the call is directed to the default socket manager in single thread configuration.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketManagerSignalEvent">
+@brief Raise the given event for the given socket manager or all socket managers hosted by the platform layer.
+     *         If pSocketManager is OpcUa_Null and bAllManager is OpcUa_False, the call is directed to the default socket
+     *         manager in single thread configuration. The only event raised by the stack itself is the OPCUA_SOCKET_SHUTDOWN_EVENT
+     *         when the stack wants an socket manager to stop processing network events.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketManagerCreateClient">
+@brief Request the given socket manager to use one of its sockets for a client connection to the given address data.
+     *         The created socket handle is returned immediately if the operation could be started without errors. The local
+     *         port number is optional and ignored if 0. Else, the socket manager tries to bind the connection to the local
+     *         port. This function is completed asynchronously by calling pfnSocketCallBack providing pCookie. This callback
+     *         is also called for follow-up events on the socket. If the connection can not be established, the callback is
+     *         called with an exception event.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketManagerCreateServer">
+@brief Request the given socket manager to use one of its sockets as a listen socket for incoming connect requests.
+     *         The given address contains a network address (and port number if required). This function is completed
+     *         synchronously. The given callback will be invoked when client connection requests on the listen socket are accepted.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketManagerDelete">
+@brief Delete the given socket manager and block until the operation is completed and no more callbacks will be invoked.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SocketManagerCreate">
+@brief Create a socket manager with the ability to host nSockets sockets and use the given runtime behavior flags.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.InetAddr">
+@} Utility Functions 
+@name Network Functions 
+@{
+@brief Convert the given IPv4 network address into its binary representation.
+     *         No longer required by the stack. Can be ignored and may be removed in future versions.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.CharToInt">
+@brief Convert the given string containing a number into OpcUa_Int32.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.UtilGetTickCount">
+@brief Get the current millisecond tick count of the system.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.UtilGetLastError">
+@brief Get last error (aka errno);
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.bSearch">
+@brief Implementation of the bsearch algorithm.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.qSort">
+@} String Functions 
+@name Utility Functions 
+@{
+@brief Implementation of the qsort algorithm.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.StrVsnPrintf">
+@brief Standard strvsnprintf functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.StrniCmp">
+@brief Standard strnicmp functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.StrnCmp">
+@brief Standard strncmp functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.StrLen">
+@brief Standard strlen functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.StrnCat">
+@brief Standard strncat functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.StrnCpy">
+@} Trace Functions 
+@name String Functions 
+@{
+@brief Standard strncpy functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.TraceClear">
+@brief Clean up the tracing functionality after stack clean up after the last call to Trace was made.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.TraceInitialize">
+@brief Initialize tracing functionality during stack initialization before any call to Trace is made.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.Trace">
+@} Thread Functions 
+@name Trace Functions 
+@{
+@brief Output the given zero terminated string to the systems tracing device.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.ThreadGetCurrentId">
+@brief Get an unique id for the calling system thread.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.ThreadSleep">
+@brief Let the calling thread sleep for msecTimeout milliseconds.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.ThreadStart">
+@brief Start the system thread and let it execute the given function with pArguments.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.ThreadDelete">
+@brief Free the resources reserved for the system thread object.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.ThreadCreate">
+@} Semaphore Functions 
+@name Thread Functions 
+@{
+@brief Reserve resources for a system thread object.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SemaphorePost">
+@brief Post/Release a semaphore with a count of uReleaseCount.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SemaphoreTimedWait">
+@brief Same as @see SemaphoreWait but with a maximum waiting time of msecTimeout milliseconds before
+     *         OpcUa_GoodNonCriticalTimeout is returned.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SemaphoreWait">
+@brief Wait on a semaphore until you can acquire 1.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SemaphoreDelete">
+@brief Delete the semaphore.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.SemaphoreCreate">
+@} Guid Functions 
+@name Semaphore Functions 
+@{
+@brief Create a semaphore object and set its initial and max value.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.GuidCreate">
+@} Mutex Functions 
+@name Guid Functions 
+@{
+@brief Create a guid and store it at the given memory position.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MutexUnlock">
+@brief Unlock the given mutex.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MutexLock">
+@brief Lock the given mutex.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MutexDelete">
+@brief Delete a mutex.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MutexCreate">
+@} Date and Time Functions 
+@name Mutex Functions 
+@{
+@brief Create a recursive mutex.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.GetDateTimeFromString">
+@brief Converts a given DateTimeString into the OpcUa_DateTime format. The string format is
+     *         %04d-%02d-%02dT%02d:%02d:%02d.%03dZ
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.GetStringFromDateTime">
+@brief Converts the given datetime into a string format format. The given buffer must have a lengt of
+     *         at least 25 bytes. The length parameter is used for verification. The format is %04d-%02d-%02dT%02d:%02d:%02d.%03dZ.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.GetTimeOfDay">
+@brief Returns the current time in the OpcUa_TimeVal format.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.UtcNow">
+@} Memory Functions 
+@name Date and Time Functions 
+@{
+@brief Returns the current time in the OpcUa_DateTime format.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MemSet">
+@brief Standard memset functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MemCpy">
+@brief Standard memcpy functionality but with target and source buffer size for additional checks.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MemReAlloc">
+@brief Standard realloc functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MemFree">
+@brief Standard free functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.MemAlloc">
+@} CallTable Header 
+@name Memory Functions 
+@{
+@brief Standard malloc functionality.
+     *  @ingroup opcua_platformlayer_interface
+
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.pReserved">
+Reserved for platform layer internal use. 
+</member>
+        <member name="F:S_OpcUa_Port_CallTable.uSize">
+@name CallTable Header 
+@{
+Size of the platform layer calltable 
+</member>
+        <member name="T:S_OpcUa_Port_CallTable">
+@brief Servicetable exposing the platform layer functionality to the stack implementation. 
+</member>
+        <member name="D:OpcUa_Socket_EventCallback">
+@brief returned on error, where other type than statuscode is used (write). 
+@brief maximum time to wait for a send operation to complete. 
+These types of events can be sent to the registered callback function from the socket.
+The receiver can register to them has to react on this events.
+
+@brief Events which are set outside the event loop. (external events) 
+@brief SocketManager behaviour control. 
+@brief PeerInfo settings 
+@brief Function prototype for receiving event callbacks from the socket module. 
+</member>
+        <member name="D:OpcUa_P_TraceHook">
+@brief Trace hook function type. 
+</member>
+        <member name="D:OpcUa_P_Timer_Callback">
+@brief Function prototype for receiving callbacks from the timer module. 
+</member>
+        <member name="D:OpcUa_RawThread">
+@brief Primary file name and path. 
+@brief Secondary file name and path. Primary file gets copied to this location
+           every OPCUA_P_TRACE_G_MAX_FILE_ENTRIES. 
+@brief Maximum number of trace lines per file. 
+@brief Default address family for name resolution. If UNSPEC, INET6 will be preferred and listen socket bound to anyaddr. 
+@brief Use localhost instead of the hostname in the URL if it matches the name of the local host. Forces use of loopback address. NO is old behavior. 
+@brief Explicitly accept selfsigned certificates if set to OPCUA_CONFIG_YES. 
+@brief If true, screen content will be used to initialize the OpenSSL PRNG. 
+@brief If true, the TCP keep alive mechanism is used in servers to detect broken socket connections. 
+@brief Use an windows API which allows a  per socket setting of TCP keep alive parameters instead of setsockopt. 
+@brief milliseconds with no activity until the first keep-alive packet is sent 
+@brief milliseconds between when successive keep-alive packets are sent if no ack is received 
+@brief The maximum number of socket managers in multithreading config, supported by the socket module. 
+@brief The maximum number of sockets supported by a socket manager. 
+@brief Removes the global pointer array OpcUa_P_Socket_g_pSocketManagers which is no longer necessary 
+@brief Set thread stack size to this value (0 for default) 
+@brief The handle for the platform thread. 
+</member>
+        <member name="M:OpcUa_PKIProvider_LoadPrivateKeyFromFile(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,_OpcUa_P_FileFormat,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,_OpcUa_ByteString*)">
+  @brief frees a certificate store object.
+
+  @param pProvider             [in]  The crypto provider handle.
+
+  @param pCertificateStore     [out] The certificate store object.
+
+</member>
+        <member name="D:OpcUa_PKIProvider_PfnLoadPrivateKeyFromFile">
+  @brief frees a certificate store object.
+
+  @param pProvider             [in]  The crypto provider handle.
+
+  @param pCertificateStore     [out] The certificate store object.
+
+</member>
+        <member name="M:OpcUa_PKIProvider_CloseCertificateStore(_OpcUa_PKIProvider*,System.Void**)">
+  @brief frees a certificate store object.
+
+  @param pProvider             [in]  The crypto provider handle.
+
+  @param pCertificateStore     [out] The certificate store object.
+
+</member>
+        <member name="D:OpcUa_PKIProvider_PfnCloseCertificateStore">
+  @brief frees a certificate store object.
+
+  @param pProvider             [in]  The crypto provider handle.
+
+  @param pCertificateStore     [out] The certificate store object.
+
+</member>
+        <member name="M:OpcUa_PKIProvider_LoadCertificate(_OpcUa_PKIProvider*,System.Void*,System.Void*,_OpcUa_ByteString*)">
+  @brief imports a given certificate into given certificate store.
+ 
+  @param pPKI                     [in]  The PKI handle.
+  @param pCertificate             [in]  The certificate that should be imported.
+  @param pCertificateStore        [in]  The certificate store that should store the passed in certificate.
+
+  @param pCertificateIndex        [out] The index that indicates the store location of the certificate within the certificate store.
+
+</member>
+        <member name="D:OpcUa_PKIProvider_PfnLoadCertificate">
+  @brief imports a given certificate into given certificate store.
+ 
+  @param pPKI                     [in]  The pki handle.
+  @param pCertificate             [in]  The certificate that should be imported.
+  @param pCertificateStore        [in]  The certificate store that should store the passed in certificate.
+
+  @param pCertificateIndex        [out] The index that indicates the store location of the certificate within the certificate store.
+
+</member>
+        <member name="M:OpcUa_PKIProvider_SaveCertificate(_OpcUa_PKIProvider*,_OpcUa_ByteString*,System.Void*,System.Void*)">
+  @brief imports a given certificate into given certificate store.
+ 
+  @param pPKI                     [in]  The PKI handle.
+  @param pCertificate             [in]  The certificate that should be imported.
+  @param pCertificateStore        [in]  The certificate store that should store the passed in certificate.
+
+  @param pCertificateIndex        [in/out] The index that indicates the store location of the certificate within the certificate store.
+
+</member>
+        <member name="D:OpcUa_PKIProvider_PfnSaveCertificate">
+  @brief imports a given certificate into given certificate store.
+
+  @param pPKI                     [in]  The pki handle.
+  @param pCertificate             [in]  The certificate that should be imported.
+  @param pCertificateStore        [in]  The certificate store that should store the passed in certificate.
+
+  @param pCertificateIndex        [int/out] The index that indicates the store location of the certificate within the certificate store.
+
+</member>
+        <member name="M:OpcUa_PKIProvider_OpenCertificateStore(_OpcUa_PKIProvider*,System.Void**)">
+  @brief Creates a certificate store object.
+
+  @param pPKI                         [in]  The PKI handle.
+  
+  @param ppCertificateStore           [out] The handle to the certificate store.
+
+</member>
+        <member name="D:OpcUa_PKIProvider_PfnOpenCertificateStore">
+  @brief Creates a certificate store object.
+
+  @param pPKI                         [in]  The pki handle.
+  
+  @param ppCertificateStore           [out] The handle to the certificate store.
+
+</member>
+        <member name="M:OpcUa_PKIProvider_ValidateCertificate(_OpcUa_PKIProvider*,_OpcUa_ByteString*,System.Void*,System.Int32*)">
+  @brief Validates a given X509 certificate object.
+ 
+   Validation:
+   - Subject/Issuer
+   - Path
+   - Certificate Revocation List (CRL)
+   - Certificate Trust List (CTL)
+
+  @param pPKI                     [in]  The pki handle.
+  @param pCertificate             [in]  The certificate that should be validated.(DER encoded ByteString)
+  @param pCertificateStore        [in]  The certificate store that validates the passed in certificate.
+
+  @param pValidationCode          [out] The validation code, that gives information about the validation result.
+
+</member>
+        <member name="D:OpcUa_PKIProvider_PfnValidateCertificate">
+  @brief Validates a given X509 certificate object.
+
+   Validation:
+   - Subject/Issuer
+   - Path
+   - Certificate Revocation List (CRL)
+   - Certificate Trust List (CTL)
+
+  @param pPKI                     [in]  The pki handle.
+  @param pCertificate             [in]  The certificate that should be validated. (DER encoded ByteString)
+  @param pCertificateStore        [in]  The certificate store that validates the passed in certificate.
+
+  @param pValidationCode          [out] The validation code, that gives information about the validation result.
+
+</member>
+        <member name="M:OpcUa_Crypto_SymmetricVerify(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)">
+  @brief Generates s 20 Bytes Message Authentication Code (MAC) of the given input buffer and a secret key.
+
+  Abstract!
+  
+  synchronous!
+
+  @param pProvider                  [in]  The crypto provider handle.
+  @param pData                      [in]  The data for the MAC generation.
+  @param dataLen                    [in]  The length data for the MAC generation.
+  @param key                        [in]  The key for the MAC generation.
+  @param pSignature                 [in]  The signature (MAC).
+
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnSymmetricVerify">
+  @brief Generates s 20 Bytes Message Authentication Code (MAC) of the given input buffer and a secret key.
+
+  Function Pointer!
+  
+  synchronous!
+
+  @param pProvider                  [in]  The crypto provider handle.
+  @param pData                      [in]  The data for the MAC generation.
+  @param dataLen                    [in]  The length data for the MAC generation.
+  @param key                        [in]  The key for the MAC generation.
+  @param pSignature                 [in]  The resulting signature (MAC).
+
+
+</member>
+        <member name="M:OpcUa_Crypto_SymmetricSign(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)">
+  @brief Generates s 20 Bytes Message Authentication Code (MAC) of the given input buffer and a secret key.
+
+  Abstract!
+  
+  synchronous!
+
+  @param pProvider        [in]  The crypto provider handle.
+  @param pData            [in]  The data for the MAC generation.
+  @param dataLen          [in]  The length data for the MAC generation.
+  @param key              [in]  The key for the MAC generation.
+
+  @param pSignature      [out] The resulting Signature (messsage authentication code).
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnSymmetricSign">
+  @brief Generates s 20 Bytes Message Authentication Code (MAC) of the given input buffer and a secret key.
+
+  Function Pointer!
+  
+  synchronous!
+
+  @param pProvider        [in]  The crypto provider handle.
+  @param pData            [in]  The data for the MAC generation.
+  @param dataLen          [in]  The length data for the MAC generation.
+  @param key              [in]  The key for the MAC generation.
+
+  @param pSignature       [out] The resulting signature (MAC).
+
+</member>
+        <member name="M:OpcUa_Crypto_SymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)">
+  @brief Decrypts encrypted data using Advanced Encryption Standard (AES) with the Cipher Block Chaining (CBC) mode.
+ 
+  Abstract!
+
+  synchronous!
+
+  @param pProvider              [in]  Provider handle.
+  @param pCipherText            [in]  Cipher text to decrypt.
+  @param cipherTextLen          [in]  The length of the cipher text.
+  @param key                    [in]  The encryption/decryption key.
+  @param pInitalVector          [in]  The initial vector.
+
+  @param pPlainText             [out] The decrypted text.
+  @param pPlainTextLen          [out] The length of the decrypted text
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnSymmetricDecrypt">
+  @brief Decrypts encrypted data using Advanced Encryption Standard (AES) with the Cipher Block Chaining (CBC) mode.
+ 
+  Function Pointer!
+
+  synchronous!
+
+  @param pProvider              [in]  Provider handle.
+  @param pCipherText            [in]  Cipher text to decrypt.
+  @param cipherTextLen          [in]  The length of the cipher text.
+  @param key                    [in]  The encryption/decryption key.
+  @param pInitalVector          [in]  The initial vector.
+
+  @param pPlainText             [out] The decrypted text.
+  @param pPlainTextLen          [out] The length of the decrypted text
+
+</member>
+        <member name="M:OpcUa_Crypto_SymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)">
+  @brief Encrypts data using Advanced Encryption Standard (AES) with the Cipher Block Chaining (CBC) mode.
+ 
+   Abstract!
+
+   keylen = blocksize =&gt; fixed sizes of 128 = 10 rounds, 192 = 12 rounds, 256 = 14 rounds
+   message length = outputlength
+
+  @param pProvider              [in]  Provider handle.
+  @param pPlainText             [in]  Plain text to encrypt.
+  @param plainTextLen           [in]  The length of the plain text.
+  @param key                    [in]  The encryption/decryption key.
+  @param pInitalVector          [in]  The initial vector.
+
+  @param pCipherText            [out] The encrypted text.
+  @param pCipherTextLen         [out] The length of the encrypted text
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnSymmetricEncrypt">
+  @brief Encrypts data using Advanced Encryption Standard (AES) with the Cipher Block Chaining (CBC) mode.
+ 
+   Function Pointer!
+
+   keylen = blocksize =&gt; fixed sizes of 128 = 10 rounds, 192 = 12 rounds, 256 = 14 rounds
+   message length = outputlength
+
+  @param pProvider              [in]  Provider handle.
+  @param pPlainText             [in]  Plain text to encrypt.
+  @param plainTextLen           [in]  The length of the plain text.
+  @param key                    [in]  The encryption/decryption key.
+  @param pInitalVector          [in]  The initial vector.
+
+  @param pCipherText            [out] The encrypted text.
+  @param pCipherTextLen         [out] The length of the encrypted text
+
+</member>
+        <member name="M:OpcUa_Crypto_CreateCertificate(_OpcUa_CryptoProvider*,System.Int32!System.Runtime.CompilerServices.IsLong!System.Runtime.CompilerServices.IsConst,_OpcUa_DateTime,_OpcUa_DateTime,OpcUa_Crypto_NameEntry_*,System.UInt32,OpcUa_Crypto_Key_,OpcUa_Crypto_Extension_*,System.UInt32,System.UInt32!System.Runtime.CompilerServices.IsConst,System.Void**,OpcUa_Crypto_Key_,System.Void***)">
+  @brief Creates a new X509 selfsigned certificate object.
+ 
+  Abstract!
+
+  @param pProvider                [in]  The crypto provider handle.
+  @param serialNumber             [in]  The serial number of the desired certificate (Should be read out of the cetificate store).
+  @param validFrom                [in]  The validation start time information.  
+  @param validTo                  [in]  The validation end time information.  
+  @param pNameEntries             [in]  Name entries for the certificate.
+  @param nameEntriesCount         [in]  The count of name entries located at the address in pNameEntries.
+  @param pSubjectPublicKey        [in]  The subject's public key.
+  @param pExtensions              [in]  The extensions for the desired certificate.
+  @param extensionsCount          [in]  The count of extension at the address in pExtensions.
+  @param signatureHashAlgorithm   [in]  The hash algorithm for calculating the signature.
+  @param pIssuerCertificate       [in]  The certificate for the certificate authority.
+  @param pIssuerPrivateKey        [in]  The private key of the certificate authority.
+  
+  @param ppCertificate           [out] The new self-signed certificate.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnCreateCertificate">
+  @brief Creates a new X509 selfsigned certificate object.
+
+  Function Pointer!
+
+  @param pProvider                [in]  The crypto provider handle.
+  @param serialNumber             [in]  The serial number of the desired certificate (Should be read out of the cetificate store).
+  @param validFrom                [in]  The validation start time information.  
+  @param validTo                  [in]  The validation end time information.  
+  @param pNameEntries             [in]  Name entries for the certificate.
+  @param nameEntriesCount         [in]  The count of name entries located at the address in pNameEntries.
+  @param pSubjectPublicKey        [in]  The subject's public key.
+  @param pExtensions              [in]  The extensions for the desired certificate.
+  @param extensionsCount          [in]  The count of extension at the address in pExtensions.
+  @param signatureHashAlgorithm   [in]  The hash algorithm for calculating the signature.
+  @param pIssuerCertificate       [in]  The certificate for the certificate authority.
+  @param pIssuerPrivateKey        [in]  The private key of the certificate authority.
+  
+  @param ppCertificate           [out] The new self-signed certificate.
+
+</member>
+        <member name="M:OpcUa_Crypto_GetCertificateThumbprint(_OpcUa_CryptoProvider*,_OpcUa_ByteString*,_OpcUa_ByteString*)">
+  @brief Gets the private key from a given certificate.
+ 
+  Abstract!
+
+  @param pProvider                  [in]  A pointer to a crypto provider.
+  @param pCertificate               [in]  The passed in certificate.
+  
+  @param pCertificateThumbprint     [out] The thumbprint of the certificate.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGetCertificateThumbprint">
+  @brief Gets the signature from a given certificate.
+ 
+  Function Pointer!
+
+  @param pProvider                  [in]  A pointer to a crypto provider.
+  @param pCertificate               [in]  The passed in certificate.
+  
+  @param pCertificateThumbprint     [out] The thumbprint of the certificate.
+
+</member>
+        <member name="M:OpcUa_Crypto_GetSignatureFromCert(_OpcUa_CryptoProvider*,_OpcUa_ByteString*,OpcUa_Crypto_Signature_*)">
+  @brief Gets the private key from a given certificate.
+ 
+  Abstract!
+
+  @param pProvider                [in]  A pointer to a crypto provider.
+  @param certificate              [in]  The passed in certificate.
+  
+  @param pSignature               [out] The read out signature of the certificate.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGetSignatureFromCert">
+  @brief Gets the signature from a given certificate.
+ 
+  Function Pointer!
+
+  @param pProvider                [in]  A pointer to a crypto provider.
+  @param certificate              [in]  The passed in certificate.
+  
+  @param pSignature               [out] The read out signature of the certificate.
+
+</member>
+        <member name="M:OpcUa_Crypto_GetPublicKeyFromCert(_OpcUa_CryptoProvider*,_OpcUa_ByteString*,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,OpcUa_Crypto_Key_*)">
+  @brief Gets the private key from a given certificate.
+ 
+  Abstract!
+
+  @param pProvider                [in]  A pointer to a crypto provider.
+  @param pCertificate             [in]  A pointer to a DER encoded ByteString representation of the certificate.
+  @param password                 [in]  Password for certificate. Only used when certificate is password protected. (Optional)
+  
+  @param pPublicKey               [out] The read out public key of the certificate.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGetPublicKeyFromCert">
+  @brief Gets the private key from a given certificate.
+ 
+  Function Pointer!
+
+  @param pProvider                [in]  A pointer to a crypto provider.
+  @param pCertificate             [in]  A pointer to a DER encoded ByteString representation of the certificate.
+  @param password                 [in]  Password for certificate. Only used when certificate is password protected. (Optional)
+  
+  @param pPublicKey               [out] The read out public key of the certificate.
+
+</member>
+        <member name="M:OpcUa_Crypto_GetPrivateKeyFromCert(_OpcUa_CryptoProvider*,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,OpcUa_Crypto_Key_*)">
+  @brief Gets the public key from a given certificate.
+ 
+  Abstract!
+
+  @param pProvider               [in]  A pointer to a crypto provider.
+  @param certificate             [in]  The passed in certificate.
+  @param password                [in]  Password for certificate. Only used when certificate is password protected. (Optional)
+  
+  @param pPrivateKey             [out] The read out private key of the certificate.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGetPrivateKeyFromCert">
+  @brief Gets the public key from a given certificate.
+
+  Function Pointer!
+
+  @param pProvider               [in]  A pointer to a crypto provider.
+  @param certificate             [in]  The passed in certificate.
+  @param password                [in]  Password for certificate. Only used when certificate is password protected. (Optional)
+  
+  @param pPrivateKey             [out] The read out private key of the certificate.
+
+</member>
+        <member name="M:OpcUa_Crypto_DeriveChannelKeysets(_OpcUa_CryptoProvider*,_OpcUa_ByteString,_OpcUa_ByteString,System.Int32!System.Runtime.CompilerServices.IsLong,_OpcUa_SecurityKeyset*,_OpcUa_SecurityKeyset*)">
+  @brief Derives a set of symmetric keys (encryption, signature, initialization vector) from a given input.
+ 
+  Abstract!
+
+  @param pCryptoProvider  [in]  The crypto provider handle.
+  @param clientNonce      [in]  The client nonce.
+  @param serverNonce      [in]  The server nonce.
+  @param keySize          [in]  The desired length of the random keys.
+
+  @param pClientKeyset    [out] The derived client-side keyset.
+  @param pServerKeyset    [out] The derived server-side keyset.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnDeriveChannelKeysets">
+  @brief Derives a set of symmetric keys (encryption, signature, initialization vector) from a given input.
+ 
+  Abstract!
+
+  @param pCryptoProvider  [in]  The crypto provider handle.
+  @param clientNonce      [in]  The client nonce.
+  @param serverNonce      [in]  The server nonce.
+  @param keySize          [in]  The desired length of the random keys.
+
+  @param pClientKeyset    [out] The derived client-side keyset.
+  @param pServerKeyset    [out] The derived server-side keyset.
+
+</member>
+        <member name="M:OpcUa_Crypto_DeriveKey(_OpcUa_CryptoProvider*,_OpcUa_ByteString,_OpcUa_ByteString,System.Int32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*)">
+  @brief Generates a session key using secret input data.
+ 
+  Abstract!
+
+  @param pProvider        [in]  The crypto provider handle.
+  @param secret           [in]  The secret information to create a random key.
+  @param seed             [in]  The seed to create a random key.
+  @param keyLen           [in]  The desired length of the random key.
+
+  @param pKey             [out] The derived random key.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnDeriveKey">
+  @brief Generates a session key using secret input data.
+
+  Function Pointer!
+
+  @param pProvider        [in]  The crypto provider handle.
+  @param secret           [in]  The secret information to create a random key.
+  @param seed             [in]  The seed to create a random key.
+  @param keyLen           [in]  The desired length of the random key.
+
+  @param pKey             [out] The derived random key.
+
+</member>
+        <member name="M:OpcUa_Crypto_GenerateKey(_OpcUa_CryptoProvider*,System.Int32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*)">
+  @brief Adds random data to the destination buffer.
+
+  Abstract!
+ 
+  @param pProvider        [in]  The crypto provider handle.
+  @param keyLen           [in]  The desired length of the random key.
+  
+  @param pKey             [out] The generated random key.
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGenerateKey">
+  @brief Adds random data to the destination buffer.
+
+  Function Pointer!
+ 
+  @param pProvider        [in]  The crypto provider handle.
+  @param keyLen           [in]  The desired length of the random key.
+  
+  @param pKey             [out] The generated random key.
+
+</member>
+        <member name="M:OpcUa_Crypto_GetAsymmetricKeyLength(_OpcUa_CryptoProvider*,OpcUa_Crypto_Key_,System.UInt32!System.Runtime.CompilerServices.IsLong*)">
+@brief
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGetAsymmetricKeyLength">
+@brief 
+
+</member>
+        <member name="M:OpcUa_Crypto_GenerateAsymmetricKeypair(_OpcUa_CryptoProvider*,System.UInt32,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,OpcUa_Crypto_Key_*)">
+@brief
+
+</member>
+        <member name="D:OpcUa_Crypto_PfnGenerateAsymmetricKeypair">
+@brief 
+
+</member>
+        <member name="M:OpcUa_Crypto_GetKeyLength(_OpcUa_String*,_OpcUa_ByteString*,System.UInt32!System.Runtime.CompilerServices.IsLong*)">
+@brief Determins the length of the keys used in the given certificate.
+
+</member>
+        <member name="T:OpcUa_Crypto_Extension_">
+@brief Extension structure for an X509 certificate. Used to add V3 extensions for a X.509 certificate.
+
+</member>
+        <member name="T:OpcUa_Crypto_NameEntry_">
+@brief Name entry structure for an X509 certificate. Used to build the X.509 Subject/Issuer name.
+
+</member>
+        <member name="F:_OpcUa_SecurityKeyset.InitializationVector">
+@brief The initialization vector. 
+</member>
+        <member name="F:_OpcUa_SecurityKeyset.EncryptionKey">
+@brief The encryption key. 
+</member>
+        <member name="F:_OpcUa_SecurityKeyset.SigningKey">
+@brief The signing key. 
+</member>
+        <member name="T:_OpcUa_SecurityKeyset">
+@brief The SecurityKeyset.
+
+</member>
+        <member name="T:OpcUa_Crypto_Key_">
+@brief The CryptoKey.
+
+</member>
+        <member name="T:OpcUa_Crypto_Signature_">
+@brief The Signature.
+
+</member>
+        <member name="F:_OpcUa_TimeVal.uintMicroSeconds">
+@brief The fraction of the last second. 
+</member>
+        <member name="F:_OpcUa_TimeVal.uintSeconds">
+@brief The number of full seconds since 1970. 
+</member>
+        <member name="T:_OpcUa_TimeVal">
+@brief Holds a time value with a maximum resolution of micro seconds.
+
+</member>
+        <member name="D:OpcUa_Timer">
+@brief The handle for a timer.
+
+</member>
+        <member name="D:OpcUa_Semaphore">
+@brief The handle for the semaphore.
+
+</member>
+        <member name="D:OpcUa_Mutex">
+@brief The handle for the mutex.
+
+</member>
+        <member name="D:OpcUa_StatusCode">
+@brief The handle for the platform thread.
+
+</member>
+        <member name="D:OpcUa_PfnInternalThreadMain">
+@brief Internally used thread main entry function.
+
+</member>
+        <member name="D:OpcUa_Thread">
+@brief OpcUa_Thread Type
+
+</member>
+        <member name="D:OpcUa_Socket">
+@brief OpcUa_Socket Type
+
+</member>
+        <member name="D:OpcUa_SocketManager">
+@brief OpcUa_SocketManager Type
+
+</member>
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaPkiCertificate'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_PfnCompare'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricEncrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricEncrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricDecrypt(_OpcUa_CryptoProvider*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong,OpcUa_Crypto_Key_*,System.Byte*,System.UInt32!System.Runtime.CompilerServices.IsLong*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricDecrypt'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricSign'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricSign(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'D:OpcUa_Crypto_PfnAsymmetricVerify'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:OpcUa_Crypto_AsymmetricVerify(_OpcUa_CryptoProvider*,_OpcUa_ByteString,OpcUa_Crypto_Key_*,_OpcUa_ByteString*)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaByteArray.op_Subscript(System.Int32)'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toFullString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.toXmlString'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaNodeId.fromXmlString(UaString)'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaNumericRange'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaUserIdentityToken.getTokenType'. -->
+        <!-- Discarding badly formed XML document comment for member 'M:UaFilterOperand.getFilterOperandType'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.SessionConnectInfo.alternativeEndpointUrls'. -->
+        <!-- Discarding badly formed XML document comment for member 'F:UaClientSdk.ServiceSettings.returnDiagnostics'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSessionCallback'. -->
+        <!-- Discarding badly formed XML document comment for member 'T:UaClientSdk.UaSubscriptionCallback'. -->
+    </members>
+</doc>
